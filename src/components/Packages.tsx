@@ -14,11 +14,11 @@ export function Packages({ compact = false }: Props) {
       <div className="container">
         <div className={`section-intro center${compact ? ' section-intro--tight' : ''}`}>
           <p className="label">Rental packages</p>
-          <h2>{compact ? 'Gold & Silver' : 'Gold & Silver fleet options'}</h2>
+          <h2>{compact ? 'Gold and Silver' : 'Gold and Silver cars'}</h2>
           {!compact && (
             <p>
-              Choose the package that fits your trip — premium Gold vehicles or budget-friendly
-              Silver rentals.
+              Gold is our premium line. Silver is our everyday line. Both are listed on the
+              Vehicles page so you can compare before you call.
             </p>
           )}
         </div>
@@ -29,7 +29,7 @@ export function Packages({ compact = false }: Props) {
               <h3>{PACKAGE_INFO[pkg].title}</h3>
               <p>{PACKAGE_INFO[pkg].description}</p>
               <Link className="text-link text-link--arrow" to={`/vehicles?package=${pkg}`}>
-                View {PACKAGE_INFO[pkg].label} vehicles
+                View {PACKAGE_INFO[pkg].label} cars
               </Link>
             </article>
           ))}
@@ -37,7 +37,7 @@ export function Packages({ compact = false }: Props) {
         {compact && (
           <p className="packages-cta">
             <Link className="btn btn-primary btn-sm" to="/vehicles">
-              View full fleet
+              View all cars
             </Link>
           </p>
         )}

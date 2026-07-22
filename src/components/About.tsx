@@ -1,42 +1,141 @@
 import { Link } from 'react-router-dom'
+import { ABOUT_IMAGE_URL } from '../lib/assets'
+import { ADDRESS_LINE1, ADDRESS_LINE2, DEPOSIT_RANGE, HOURS, MAPS_DIRECTIONS_URL, PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { LocationMap } from './LocationMap'
+import { SafeImage } from './SafeImage'
 
-type Props = {
-  showHeading?: boolean
-}
+const values = [
+  {
+    title: 'Local and accountable',
+    text: 'We are right here in Virginia Beach. When you call, you talk to us, not a big corporate line.',
+  },
+  {
+    title: 'Straightforward terms',
+    text: 'We tell you the age requirement, deposit, and payment rules up front so you know what to expect.',
+  },
+  {
+    title: 'See the cars first',
+    text: 'Look at Gold and Silver options online and check what is open for your date before you call.',
+  },
+]
 
-export function About({ showHeading = true }: Props) {
+const requirements = [
+  { label: 'Minimum age', value: '25 and up' },
+  { label: 'License', value: 'Valid driver\'s license' },
+  { label: 'Payment', value: 'Debit or credit card only. No cash.' },
+  { label: 'Deposit', value: `${DEPOSIT_RANGE}, depending on the vehicle` },
+  { label: 'Extra driver', value: '$50' },
+  { label: 'Packages', value: 'Gold (premium) and Silver (standard)' },
+]
+
+export function About() {
   return (
-    <section className="section about" id="about">
-      <div className="container about-grid">
-        <div className="about-media">
-          <img
-            src="https://framerusercontent.com/images/5V0FBFBBddUu3pxmv9Ig58Oo.png?scale-down-to=1024"
-            alt="J&M Car Rental vehicle"
-          />
+    <>
+      <section className="section about about-story">
+        <div className="container about-grid">
+          <div className="about-media">
+            <SafeImage
+              src={ABOUT_IMAGE_URL}
+              alt="J&M Car Rental vehicle"
+              fallbackSrc={ABOUT_IMAGE_URL}
+            />
+          </div>
+          <div className="about-copy">
+            <p className="label">Who we are</p>
+            <h2>A local rental shop in Virginia Beach</h2>
+            <p>
+              J&amp;M Car Rental LLC rents clean, dependable cars for day to day use and short trips.
+              Pick Gold if you want a nicer ride, or Silver if you want something practical and
+              affordable.
+            </p>
+            <p>
+              Check the website for open cars, call us to hold one, and pick it up during our
+              business hours. That is the whole process.
+            </p>
+            <div className="about-actions">
+              <Link className="btn btn-primary btn-sm" to="/vehicles">
+                See our cars
+              </Link>
+              <Link className="btn btn-outline btn-sm" to="/contact">
+                Contact us
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="about-copy">
-          {showHeading && (
-            <>
-              <p className="label">About us</p>
-              <h2>Dependable rentals built around your schedule</h2>
-            </>
-          )}
-          <p>
-            J&amp;M Car Rental LLC is a local Virginia Beach business offering clean, well-maintained
-            vehicles for daily and short-term use. Pick a date, see what&apos;s open, and call us to
-            lock in your rental.
-          </p>
-          <ul className="about-facts">
-            <li>Ages 25 and up</li>
-            <li>Debit or credit card — no cash</li>
-            <li>Deposits from $150–$200</li>
-            <li>Gold &amp; Silver rental packages</li>
-          </ul>
-          <Link className="text-link" to="/contact">
-            Visit our location →
-          </Link>
+      </section>
+
+      <section className="section section-tight about-values-section">
+        <div className="container">
+          <div className="section-intro center section-intro--tight">
+            <p className="label">How we work</p>
+            <h2>Simple, honest, and local</h2>
+          </div>
+          <div className="about-values-grid">
+            {values.map((item) => (
+              <article key={item.title} className="about-value-card">
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="section section-tight about-details">
+        <div className="container about-details-grid">
+          <div className="about-info-card">
+            <h3>What you need to rent</h3>
+            <dl className="about-info-list">
+              {requirements.map((item) => (
+                <div key={item.label}>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <Link className="text-link text-link--arrow" to="/faq">
+              More questions? Read the FAQ
+            </Link>
+          </div>
+
+          <div className="about-info-card">
+            <h3>Where to find us</h3>
+            <address className="about-address">
+              {ADDRESS_LINE1}
+              <br />
+              {ADDRESS_LINE2}
+            </address>
+            <p className="about-phone">
+              <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
+            </p>
+            <dl className="about-hours">
+              <div>
+                <dt>{HOURS.weekdays.label}</dt>
+                <dd>{HOURS.weekdays.time}</dd>
+              </div>
+              <div>
+                <dt>{HOURS.saturday.label}</dt>
+                <dd>{HOURS.saturday.time}</dd>
+              </div>
+              <div>
+                <dt>{HOURS.sunday.label}</dt>
+                <dd className="closed">{HOURS.sunday.time}</dd>
+              </div>
+            </dl>
+            <div className="location-map-block location-map-block--compact">
+              <LocationMap compact />
+              <a
+                className="text-link text-link--arrow location-map-link"
+                href={MAPS_DIRECTIONS_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Get directions in Google Maps
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   )
 }

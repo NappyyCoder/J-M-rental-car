@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
 
 const links = [
   { to: '/vehicles', label: 'Vehicles' },
@@ -51,8 +52,8 @@ export function Header() {
           ))}
         </nav>
 
-        <a className="btn btn-primary btn-sm nav-cta" href="tel:+17035631125">
-          703-563-1125
+        <a className="btn btn-primary btn-sm nav-cta" href={`tel:${PHONE_TEL}`}>
+          {PHONE_DISPLAY}
         </a>
       </div>
     </header>

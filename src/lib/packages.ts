@@ -2,17 +2,19 @@ import type { VehiclePackage } from '../types'
 
 export const PACKAGE_INFO: Record<
   VehiclePackage,
-  { label: string; title: string; description: string }
+  { label: string; title: string; description: string; summary: string }
 > = {
   gold: {
     label: 'Gold',
     title: 'Gold package',
-    description: 'Premium vehicles — newer models, higher-end trims, and our best fleet options.',
+    description: 'Our nicer cars. Newer models and higher trims when you want something a step up.',
+    summary: 'Premium vehicles with newer models and higher trims.',
   },
   silver: {
     label: 'Silver',
     title: 'Silver package',
-    description: 'Reliable everyday rentals — affordable, practical cars for daily use.',
+    description: 'Solid everyday cars at a good price. Reliable and easy on the wallet.',
+    summary: 'Everyday rentals at a lower daily rate.',
   },
 }
 

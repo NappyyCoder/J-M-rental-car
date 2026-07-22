@@ -1,10 +1,11 @@
 import { Reveal } from './Reveal'
+import { DEPOSIT_RANGE } from '../lib/contact'
 
 const items = [
   { value: '25+', label: 'Minimum age' },
-  { value: '$150–$200', label: 'Deposit range' },
-  { value: 'Mon–Sat', label: 'Open weekly' },
-  { value: 'VB Local', label: 'Virginia Beach' },
+  { value: DEPOSIT_RANGE, label: 'Deposit range' },
+  { value: 'Mon to Sat', label: 'Open weekly' },
+  { value: 'Local', label: 'Virginia Beach' },
 ]
 
 export function TrustBar() {

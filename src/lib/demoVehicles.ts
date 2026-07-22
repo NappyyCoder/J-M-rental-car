@@ -1,3 +1,4 @@
+import { DEMO_VEHICLE_IMAGES } from './assets'
 import type { Vehicle } from '../types'
 
 const now = new Date().toISOString()
@@ -15,8 +16,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 79,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1621007947382-bcb3c783716e?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.goldSedan,
     unavailableDates: [],
     createdAt: now,
   },
@@ -31,8 +31,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 89,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.goldBmw,
     unavailableDates: [],
     createdAt: now,
   },
@@ -47,8 +46,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 99,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.goldMercedes,
     unavailableDates: [],
     createdAt: now,
   },
@@ -63,8 +61,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 105,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1617814076367-b759c0d2e679?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.goldLexus,
     unavailableDates: [],
     createdAt: now,
   },
@@ -79,8 +76,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 49,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.silverCivic,
     unavailableDates: [],
     createdAt: now,
   },
@@ -95,8 +91,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 45,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1590362891995-7a894922c0e5?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.silverCorolla,
     unavailableDates: [],
     createdAt: now,
   },
@@ -111,8 +106,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 55,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.silverAltima,
     unavailableDates: [],
     createdAt: now,
   },
@@ -127,8 +121,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 65,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519641471654-76ce5377cb70?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.silverTucson,
     unavailableDates: [],
     createdAt: now,
   },
@@ -143,8 +136,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 75,
     seats: 5,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1533473359331-0135ef1b58dd?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.silverTruck,
     unavailableDates: [],
     createdAt: now,
   },
@@ -159,8 +151,7 @@ export const DEMO_VEHICLES: Vehicle[] = [
     dailyRate: 72,
     seats: 7,
     transmission: 'automatic',
-    imageUrl:
-      'https://images.unsplash.com/photo-1527786356703-4b100181fb4a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: DEMO_VEHICLE_IMAGES.silverVan,
     unavailableDates: [],
     createdAt: now,
   },

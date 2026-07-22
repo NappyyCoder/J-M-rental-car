@@ -1,7 +1,9 @@
 import type { CSSProperties } from 'react'
 import type { Vehicle, VehicleCategory } from '../types'
+import { PHONE_TEL } from '../lib/contact'
 import { isAvailableOn } from '../lib/dates'
 import { packageLabel } from '../lib/packages'
+import { SafeImage } from './SafeImage'
 
 const categoryLabel: Record<VehicleCategory, string> = {
   economy: 'Economy',
@@ -26,11 +28,11 @@ export function VehicleCard({ vehicle, date, index = 0 }: Props) {
       style={{ '--card-delay': `${Math.min(index, 8) * 50}ms` } as CSSProperties}
     >
       <div className="vehicle-media">
-        {vehicle.imageUrl ? (
-          <img src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} />
-        ) : (
-          <div className="vehicle-placeholder">No photo</div>
-        )}
+        <SafeImage
+          src={vehicle.imageUrl}
+          alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+          fallbackCategory={vehicle.category}
+        />
         <span className={`package-badge package-badge--${vehicle.package}`}>
           {packageLabel(vehicle.package)}
         </span>
@@ -47,11 +49,11 @@ export function VehicleCard({ vehicle, date, index = 0 }: Props) {
             <small>/day</small>
           </span>
           {available ? (
-            <a className="vehicle-link" href="tel:+17035631125">
-              Reserve
+            <a className="vehicle-link" href={`tel:${PHONE_TEL}`}>
+              Call to book
             </a>
           ) : (
-            <span className="vehicle-link muted">Unavailable</span>
+            <span className="vehicle-link muted">Booked</span>
           )}
         </div>
       </div>

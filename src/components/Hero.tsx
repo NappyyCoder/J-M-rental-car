@@ -1,38 +1,32 @@
-import { Link } from 'react-router-dom'
+import { HERO_IMAGE_URL } from '../lib/assets'
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { SafeImage } from './SafeImage'
 
 export function Hero() {
   return (
-    <section className="hero">
+    <section className="hero hero--home">
       <div className="hero-bg" aria-hidden="true">
-        <img
-          src="https://framerusercontent.com/images/4MBwe7xoVh8RMCL5IVMhqzelpM.png?scale-down-to=2048"
-          alt=""
-        />
+        <SafeImage src={HERO_IMAGE_URL} alt="" className="hero-bg-image" fallbackSrc={HERO_IMAGE_URL} />
         <div className="hero-overlay" />
       </div>
       <div className="container hero-content">
-        <p className="label hero-in">J&amp;M Car Rental LLC · Virginia Beach</p>
-        <h1 className="hero-in">
-          Professional rentals.
-          <br />
-          <span>Clear terms. Ready when you are.</span>
-        </h1>
+        <p className="label hero-in">J&amp;M Car Rental LLC</p>
+        <h1 className="hero-in">Car rentals in Virginia Beach</h1>
         <p className="hero-lead hero-in">
-          Browse Gold and Silver packages, check same-day availability, and call to reserve with
-          debit or credit.
+          Learn about our shop, then browse cars available for the day you need.
         </p>
         <div className="hero-actions hero-in">
-          <Link className="btn btn-hero" to="/vehicles">
-            View availability
-          </Link>
-          <a className="btn btn-hero-outline" href="tel:+17035631125">
-            Call 703-563-1125
+          <a className="btn btn-hero" href="#about">
+            About our company
+          </a>
+          <a className="btn btn-hero-outline" href="#available-cars">
+            See today&apos;s cars
           </a>
         </div>
+        <p className="hero-call hero-in">
+          Or call <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a> to book
+        </p>
       </div>
-      <a className="hero-scroll" href="#how-it-works" aria-label="Scroll to how it works">
-        <span className="hero-scroll-line" />
-      </a>
     </section>
   )
 }

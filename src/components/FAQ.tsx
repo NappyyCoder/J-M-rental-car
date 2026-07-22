@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { DEPOSIT_RANGE, PHONE_DISPLAY } from '../lib/contact'
 
 type Props = {
   showIntro?: boolean
@@ -7,29 +8,29 @@ type Props = {
 
 const faqs = [
   {
-    q: 'What documents are required to rent a car?',
-    a: 'You must be 25 or older with a valid driver’s license. A debit or credit card is required for the deposit — we do not accept cash.',
+    q: 'What do I need to rent a car?',
+    a: 'You must be 25 or older with a valid driver\'s license. We need a debit or credit card for the deposit. We do not take cash.',
   },
   {
     q: 'How much is the deposit?',
-    a: 'Deposits range from $150.00 to $200.00 depending on the vehicle.',
+    a: `Most deposits are between ${DEPOSIT_RANGE}. The exact amount depends on the vehicle.`,
   },
   {
-    q: 'What is the difference between Gold and Silver packages?',
-    a: 'Gold includes our premium vehicles — newer models and higher-end options. Silver offers reliable, affordable everyday rentals.',
+    q: 'What is the difference between Gold and Silver?',
+    a: 'Gold cars are our premium options, usually newer or nicer models. Silver cars are our standard rentals that cost less day to day.',
   },
   {
-    q: 'Can I add another driver?',
-    a: 'Yes. An additional approved driver is $50.00. They must also have a valid license.',
+    q: 'Can someone else drive the car?',
+    a: 'Yes. An extra driver costs $50. They need a valid license too.',
   },
   {
     q: 'What are your hours?',
-    a: 'Monday through Friday 9:30 AM – 5:30 PM, Saturday 10:00 AM – 2:00 PM. Closed Sunday.',
+    a: 'Monday through Friday, 9:30 AM to 5:30 PM. Saturday, 10:00 AM to 2:00 PM. We are closed on Sunday.',
   },
   {
-    q: 'How do I book a vehicle?',
-    a: 'Check availability on our Vehicles page for your date, then call 703-563-1125 during business hours to reserve.',
-    link: { to: '/vehicles', label: 'Browse vehicles' },
+    q: 'How do I book a car?',
+    a: `Check the Vehicles page for your date, then call ${PHONE_DISPLAY} during business hours to reserve.`,
+    link: { to: '/vehicles', label: 'Go to Vehicles' },
   },
 ]
 
@@ -42,8 +43,8 @@ export function FAQ({ showIntro = true }: Props) {
         {showIntro && (
           <div className="faq-intro">
             <p className="label">FAQ</p>
-            <h2>Frequently asked questions</h2>
-            <p>Rental terms, payment, and what to bring when you pick up your vehicle.</p>
+            <h2>Common questions</h2>
+            <p>Quick answers about renting from J&amp;M Car Rental.</p>
           </div>
         )}
         <div className="faq-list">

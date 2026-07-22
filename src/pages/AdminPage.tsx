@@ -11,6 +11,7 @@ import {
   signOut,
 } from '../lib/vehicles'
 import { PageLayout } from '../components/PageLayout'
+import { SafeImage } from '../components/SafeImage'
 import type { VehicleCategory, VehicleInput, VehiclePackage } from '../types'
 
 const emptyForm: VehicleInput = {
@@ -137,7 +138,7 @@ export function AdminPage() {
                 </div>
               </form>
               <p className="form-note">
-                Staff accounts are created in Supabase → Authentication → Users.
+                Staff accounts are created in Supabase under Authentication, then Users.
               </p>
             </div>
           </div>
@@ -310,8 +311,8 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
                     setForm({ ...form, package: e.target.value as VehiclePackage })
                   }
                 >
-                  <option value="gold">Gold — premium</option>
-                  <option value="silver">Silver — standard</option>
+                  <option value="gold">Gold (premium)</option>
+                  <option value="silver">Silver (standard)</option>
                 </select>
               </div>
             </div>
@@ -388,11 +389,11 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
         <section className="admin-panel admin-panel-list">
           <div className="admin-panel-head">
             <h2>Fleet</h2>
-            <span className="admin-count">{dbVehicles.length} vehicles · {date}</span>
+            <span className="admin-count">{dbVehicles.length} vehicles for {date}</span>
           </div>
           {dbVehicles.length === 0 ? (
             <p className="admin-empty">
-              No vehicles yet. Add your first one using the form — sample cars on the public site
+              No vehicles yet. Add your first one using the form. Sample cars on the public site
               are placeholders until you save real inventory.
             </p>
           ) : (
@@ -402,7 +403,7 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
                 const title = v.name || `${v.year} ${v.make} ${v.model}`
                 return (
                   <li className="admin-fleet-item" key={v.id}>
-                    <img src={v.imageUrl} alt="" />
+                    <SafeImage src={v.imageUrl} alt={title} fallbackCategory={v.category} />
                     <div className="admin-fleet-body">
                       <div className="admin-fleet-title">
                         <h3>{title}</h3>
@@ -414,7 +415,7 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
                         </span>
                       </div>
                       <p>
-                        {v.year} {v.make} {v.model} · ${v.dailyRate}/day
+                        {v.year} {v.make} {v.model}, ${v.dailyRate}/day
                       </p>
                     </div>
                     <div className="admin-fleet-actions">

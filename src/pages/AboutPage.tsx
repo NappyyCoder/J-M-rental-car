@@ -1,6 +1,5 @@
 import { About } from '../components/About'
 import { CtaBand } from '../components/CtaBand'
-import { Features } from '../components/Features'
 import { PageHero } from '../components/PageHero'
 import { PageLayout } from '../components/PageLayout'
 
@@ -8,15 +7,14 @@ export function AboutPage() {
   return (
     <PageLayout>
       <PageHero
-        label="About J&M"
-        title="Dependable rentals in Virginia Beach"
-        lead="A local business focused on clean vehicles, clear rental terms, and service you can count on."
+        label="About us"
+        title="J&amp;M Car Rental LLC"
+        lead="We are a local Virginia Beach rental shop with clear terms, Gold and Silver packages, and friendly service."
       />
-      <About showHeading={false} />
-      <Features />
+      <About />
       <CtaBand
-        title="Questions about renting?"
-        text="Review our FAQ or call us — we're happy to walk you through requirements and availability."
+        title="Ready to rent?"
+        text="Look at what is open online, then call us during business hours to hold a car."
       />
     </PageLayout>
   )

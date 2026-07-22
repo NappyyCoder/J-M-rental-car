@@ -1,48 +1,64 @@
-export function Contact() {
-  const maps =
-    'https://www.google.com/maps/search/?api=1&query=3692+S+Plaza+Trail+%2310+Virginia+Beach+VA+23452'
+import {
+  ADDRESS_LINE1,
+  ADDRESS_LINE2,
+  DEPOSIT_RANGE,
+  HOURS,
+  MAPS_DIRECTIONS_URL,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+} from '../lib/contact'
+import { LocationMap } from './LocationMap'
 
+export function Contact() {
   return (
     <section className="section contact" id="contact">
       <div className="container contact-grid">
         <div>
           <p className="label">Location</p>
-          <h2>Visit J&amp;M Car Rental</h2>
+          <h2>Come see us</h2>
           <address>
-            3692 S Plaza Trail #10
+            {ADDRESS_LINE1}
             <br />
-            Virginia Beach, VA 23452
+            {ADDRESS_LINE2}
           </address>
           <p className="contact-phone">
-            <a href="tel:+17035631125">703-563-1125</a>
+            <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
           </p>
-          <a className="text-link" href={maps} target="_blank" rel="noreferrer">
-            Get directions →
-          </a>
+          <div className="location-map-block">
+            <LocationMap />
+            <a
+              className="text-link text-link--arrow location-map-link"
+              href={MAPS_DIRECTIONS_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Get directions in Google Maps
+            </a>
+          </div>
         </div>
         <div className="hours-card">
           <h3>Hours</h3>
           <dl>
             <div>
-              <dt>Mon – Fri</dt>
-              <dd>9:30 AM – 5:30 PM</dd>
+              <dt>{HOURS.weekdays.label}</dt>
+              <dd>{HOURS.weekdays.time}</dd>
             </div>
             <div>
-              <dt>Saturday</dt>
-              <dd>10:00 AM – 2:00 PM</dd>
+              <dt>{HOURS.saturday.label}</dt>
+              <dd>{HOURS.saturday.time}</dd>
             </div>
             <div>
-              <dt>Sunday</dt>
-              <dd className="closed">Closed</dd>
+              <dt>{HOURS.sunday.label}</dt>
+              <dd className="closed">{HOURS.sunday.time}</dd>
             </div>
           </dl>
           <div className="contact-note">
-            <p><strong>Rental requirements</strong></p>
+            <p><strong>Before you pick up</strong></p>
             <ul>
-              <li>Ages 25 and up</li>
+              <li>Must be 25 or older</li>
               <li>Valid driver&apos;s license</li>
-              <li>Debit or credit card — no cash</li>
-              <li>Deposit $150–$200</li>
+              <li>Debit or credit card only. No cash.</li>
+              <li>Deposit usually {DEPOSIT_RANGE}</li>
             </ul>
           </div>
         </div>

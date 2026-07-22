@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
 
 export function Footer() {
   return (
@@ -22,8 +23,8 @@ export function Footer() {
           <Link to="/admin">Staff login</Link>
         </nav>
         <div className="footer-contact">
-          <a href="tel:+17035631125">703-563-1125</a>
-          <p className="footer-hours">Mon–Fri 9:30–5:30 · Sat 10–2</p>
+          <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
+          <p className="footer-hours">Mon to Fri 9:30 to 5:30. Sat 10 to 2.</p>
           <p>© {new Date().getFullYear()} J&amp;M Car Rental LLC</p>
         </div>
       </div>

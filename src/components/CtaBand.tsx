@@ -1,11 +1,13 @@
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+
 type Props = {
   title?: string
   text?: string
 }
 
 export function CtaBand({
-  title = "Let's get you moving",
-  text = 'Pick your date, choose a vehicle, and call us to confirm your rental.',
+  title = 'Ready to rent a car?',
+  text = 'Pick your date, find a car you like, and call us to lock it in.',
 }: Props) {
   return (
     <section className="cta-band">
@@ -15,8 +17,8 @@ export function CtaBand({
           <h2>{title}</h2>
           <p>{text}</p>
         </div>
-        <a className="btn btn-primary btn-lg" href="tel:+17035631125">
-          Call 703-563-1125
+        <a className="btn btn-primary btn-lg" href={`tel:${PHONE_TEL}`}>
+          Call {PHONE_DISPLAY}
         </a>
       </div>
     </section>
