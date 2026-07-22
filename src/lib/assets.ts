@@ -8,7 +8,7 @@ export const HERO_IMAGE_URL = '/images/hero.jpg'
 export const HOME_GOLD_PACKAGE_IMAGE = '/images/fleet/audi-a8.jpeg'
 export const HOME_SILVER_PACKAGE_IMAGE = '/images/fleet/chevy-cruze.jpeg'
 
-export const ABOUT_IMAGE_URL = '/images/about.jpg'
+export const ABOUT_IMAGE_URL = '/images/fleet/vw-cc.jpeg'
 
 export const VEHICLE_FALLBACK_IMAGES: Record<VehicleCategory, string> = {
   economy: '/images/economy.jpg',

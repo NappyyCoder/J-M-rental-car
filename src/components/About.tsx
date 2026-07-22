@@ -36,8 +36,8 @@ export function About() {
           <div className="about-media">
             <SafeImage
               src={ABOUT_IMAGE_URL}
-              alt="J&M Car Rental vehicle"
-              fallbackSrc={ABOUT_IMAGE_URL}
+              alt="J&M Car Rental Volkswagen in Virginia Beach"
+              fallbackCategory="sedan"
             />
           </div>
           <div className="about-copy">
