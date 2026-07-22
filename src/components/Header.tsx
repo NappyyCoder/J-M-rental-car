@@ -49,12 +49,19 @@ export function Header() {
     setOpen(false)
   }, [pathname])
 
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
   function closeMenu() {
     setOpen(false)
   }
 
   return (
-    <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
+    <header className={`site-header${scrolled ? ' is-scrolled' : ''}${open ? ' is-menu-open' : ''}`}>
       <div className="container nav-inner">
         <Link
           to="/"
@@ -69,14 +76,19 @@ export function Header() {
         <button
           type="button"
           className="nav-toggle"
-          aria-label="Menu"
+          aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
+          aria-controls="main-nav"
           onClick={() => setOpen((v) => !v)}
         >
-          Menu
+          {open ? 'Close' : 'Menu'}
         </button>
 
-        <nav className={`nav-links${open ? ' open' : ''}`} aria-label="Main">
+        <nav
+          id="main-nav"
+          className={`nav-links${open ? ' open' : ''}`}
+          aria-label="Main"
+        >
           {links.map((item) =>
             item.children ? (
               <div
@@ -86,7 +98,9 @@ export function Header() {
                 <NavLink
                   to={item.to}
                   className={({ isActive }) =>
-                    isActive || isNavItemActive(item, pathname) ? 'active nav-dropdown-trigger' : 'nav-dropdown-trigger'
+                    isActive || isNavItemActive(item, pathname)
+                      ? 'active nav-dropdown-trigger'
+                      : 'nav-dropdown-trigger'
                   }
                   onClick={closeMenu}
                 >
@@ -98,7 +112,9 @@ export function Header() {
                       key={child.to}
                       to={child.to}
                       role="menuitem"
-                      className={({ isActive }) => (isActive ? 'active' : undefined)}
+                      className={({ isActive }) =>
+                        isActive ? 'active nav-dropdown-sublink' : 'nav-dropdown-sublink'
+                      }
                       onClick={closeMenu}
                     >
                       {child.label}
@@ -118,6 +134,10 @@ export function Header() {
               </NavLink>
             ),
           )}
+
+          <a className="btn btn-primary btn-sm nav-mobile-call" href={`tel:${PHONE_TEL}`} onClick={closeMenu}>
+            Call {PHONE_DISPLAY}
+          </a>
         </nav>
 
         <a className="btn btn-primary btn-sm nav-cta" href={`tel:${PHONE_TEL}`}>
