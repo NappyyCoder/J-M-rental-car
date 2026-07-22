@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { Logo } from './Logo'
 
 type NavChild = {
   to: string
@@ -69,8 +70,7 @@ export function Header() {
           aria-label="J&amp;M Car Rental home"
           onClick={closeMenu}
         >
-          <span className="brand-mark">J&amp;M</span>
-          <span className="brand-sub">Car Rental LLC</span>
+          <Logo variant="header" />
         </Link>
 
         <button
@@ -135,9 +135,6 @@ export function Header() {
             ),
           )}
 
-          <a className="btn btn-primary btn-sm nav-mobile-call" href={`tel:${PHONE_TEL}`} onClick={closeMenu}>
-            Call {PHONE_DISPLAY}
-          </a>
         </nav>
 
         <a className="btn btn-primary btn-sm nav-cta" href={`tel:${PHONE_TEL}`}>

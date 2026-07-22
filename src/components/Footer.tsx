@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { Logo } from './Logo'
 
 export function Footer() {
   return (
@@ -7,7 +8,7 @@ export function Footer() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <Link to="/" className="footer-brand-link">
-            <strong>J&amp;M Car Rental LLC</strong>
+            <Logo variant="footer" className="brand-logo--footer" />
           </Link>
           <p>Virginia Beach, VA</p>
           <p className="footer-address">

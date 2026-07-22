@@ -25,9 +25,13 @@ const steps = [
 const trustItems = [
   { value: '25+', label: 'Age 25+' },
   { value: DEPOSIT_RANGE, label: 'Deposit' },
-  { value: 'Mon–Sat', label: 'Open' },
+  {
+    value: 'Mon–Sat',
+    label: 'Open',
+    details: [`Mon–Fri ${HOURS.weekdays.time}`, `Sat ${HOURS.saturday.time}`],
+  },
   { value: 'Local', label: 'Virginia Beach' },
-]
+] as const
 
 const packageImages = {
   gold: DEMO_VEHICLE_IMAGES.goldSedan,
@@ -125,6 +129,12 @@ export function RentalProcess({ variant = 'default' }: Props) {
               <div key={item.label} className="trust-item">
                 <strong>{item.value}</strong>
                 <span>{item.label}</span>
+                {'details' in item &&
+                  item.details.map((line) => (
+                    <span key={line} className="trust-item-detail">
+                      {line}
+                    </span>
+                  ))}
               </div>
             ))}
           </div>
@@ -174,6 +184,12 @@ export function RentalProcess({ variant = 'default' }: Props) {
             <div key={item.label} className="trust-item">
               <strong>{item.value}</strong>
               <span>{item.label}</span>
+              {'details' in item &&
+                item.details.map((line) => (
+                  <span key={line} className="trust-item-detail">
+                    {line}
+                  </span>
+                ))}
             </div>
           ))}
         </div>

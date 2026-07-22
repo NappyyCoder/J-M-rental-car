@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useFleet } from '../context/FleetContext'
 import { isAvailableOn, todayISO } from '../lib/dates'
 import { PACKAGE_INFO } from '../lib/packages'
@@ -22,12 +21,31 @@ export function HomeFleetPreview() {
   const [vehiclePackage, setVehiclePackage] = useState<VehiclePackage | 'all'>('all')
   const [date, setDate] = useState(todayISO())
 
-  const available = useMemo(() => {
-    return vehicles.filter((v) => {
+  const filtered = useMemo(() => {
+    const list = vehicles.filter((v) => {
       if (vehiclePackage !== 'all' && v.package !== vehiclePackage) return false
-      return isAvailableOn(v, date)
+      if (vehiclePackage !== 'all' && !isAvailableOn(v, date)) return false
+      return true
     })
+
+    if (vehiclePackage === 'all') {
+      return [...list].sort((a, b) => {
+        const aAvailable = isAvailableOn(a, date)
+        const bAvailable = isAvailableOn(b, date)
+        if (aAvailable === bAvailable) return 0
+        return aAvailable ? -1 : 1
+      })
+    }
+
+    return list
   }, [vehicles, vehiclePackage, date])
+
+  const availableCount = useMemo(
+    () => filtered.filter((v) => isAvailableOn(v, date)).length,
+    [filtered, date],
+  )
+
+  const showAllPackages = vehiclePackage === 'all'
 
   if (!loading && vehicles.length === 0) return null
 
@@ -38,10 +56,12 @@ export function HomeFleetPreview() {
           <div>
             <p className="label">Available cars</p>
             <h2>{formatDate(date)}</h2>
+            {showAllPackages && !loading && filtered.length > 0 && (
+              <p className="home-fleet-sub">
+                Showing all cars. Booked ones show when they open again.
+              </p>
+            )}
           </div>
-          <Link className="btn btn-outline btn-sm" to="/vehicles">
-            See all cars
-          </Link>
         </div>
 
         {isDemoFleet && (
@@ -78,22 +98,25 @@ export function HomeFleetPreview() {
 
         {!loading && (
           <p className="home-fleet-count">
-            {available.length} {available.length === 1 ? 'car' : 'cars'} open
+            {showAllPackages
+              ? `${availableCount} of ${filtered.length} ${filtered.length === 1 ? 'car' : 'cars'} available`
+              : `${filtered.length} ${filtered.length === 1 ? 'car' : 'cars'} open`}
           </p>
         )}
 
         {loading ? (
           <p className="home-fleet-status">Loading…</p>
-        ) : available.length === 0 ? (
+        ) : filtered.length === 0 ? (
           <div className="home-fleet-empty">
-            <p>Nothing open for that date. Try another day or call us.</p>
-            <Link className="btn btn-outline btn-sm" to="/vehicles">
-              See all cars
-            </Link>
+            <p>
+              {showAllPackages
+                ? 'No cars in the fleet yet.'
+                : 'Nothing open for that date. Try another day, choose All, or call us.'}
+            </p>
           </div>
         ) : (
           <div className="fleet-grid fleet-grid--home">
-            {available.map((vehicle, i) => (
+            {filtered.map((vehicle, i) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} date={date} index={i} />
             ))}
           </div>
