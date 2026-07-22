@@ -1,18 +1,19 @@
 import { Link } from 'react-router-dom'
 import { Reveal } from './Reveal'
+import { WEEKLY_RATES_NOTE } from '../lib/contact'
 
 const highlights = [
   {
     to: '/about',
     label: 'About us',
     title: 'Local and dependable',
-    text: 'Virginia Beach rentals with clear terms, well kept cars, and friendly service.',
+    text: 'Virginia Beach rentals with clear terms, well kept cars, and veteran owned service.',
   },
   {
     to: '/services',
     label: 'Services',
     title: 'Flexible rentals',
-    text: 'Daily rentals, same day availability, extra drivers, and easy pickup.',
+    text: `Daily rentals, same day availability, extra drivers, and easy pickup. ${WEEKLY_RATES_NOTE}`,
   },
   {
     to: '/faq',

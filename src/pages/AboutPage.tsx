@@ -2,6 +2,7 @@ import { About } from '../components/About'
 import { CtaBand } from '../components/CtaBand'
 import { PageHero } from '../components/PageHero'
 import { PageLayout } from '../components/PageLayout'
+import { VETERAN_OWNED_LABEL } from '../lib/contact'
 
 export function AboutPage() {
   return (
@@ -9,7 +10,7 @@ export function AboutPage() {
       <PageHero
         label="About us"
         title="J&amp;M Car Rental LLC"
-        lead="We are a local Virginia Beach rental shop with clear terms, Gold and Silver packages, and friendly service."
+        lead={`${VETERAN_OWNED_LABEL}. Local Virginia Beach rentals with clear terms, Gold and Silver packages, and friendly service.`}
       />
       <About />
       <CtaBand

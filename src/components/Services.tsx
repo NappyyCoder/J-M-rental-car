@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ADDRESS_LINE1, ADDRESS_LINE2 } from '../lib/contact'
+import { ADDRESS_LINE1, ADDRESS_LINE2, WEEKLY_RATES_NOTE } from '../lib/contact'
 import { PageFoot } from './PageFoot'
 
 const services = [
@@ -10,6 +10,10 @@ const services = [
   {
     title: 'Online availability',
     text: 'Browse Gold and Silver cars on our site and check open dates before you call.',
+  },
+  {
+    title: 'Weekly rates & specials',
+    text: WEEKLY_RATES_NOTE,
   },
   {
     title: 'Extra driver',

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { HOME_GOLD_PACKAGE_IMAGE, HOME_SILVER_PACKAGE_IMAGE } from '../lib/assets'
-import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, PHONE_TEL, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
 import { PACKAGE_INFO, PACKAGE_ORDER } from '../lib/packages'
 import { SafeImage } from './SafeImage'
 
@@ -41,14 +41,18 @@ export function RentalProcess({ variant = 'default' }: Props) {
             <p className="label">About J&amp;M</p>
             <h2>Local rentals in Virginia Beach</h2>
             <p className="home-intro-lead">
-              J&amp;M Car Rental LLC is a neighborhood shop for everyday driving and short trips.
-              Browse what is open below, then call us to hold your car.
+              J&amp;M Car Rental LLC is a {VETERAN_OWNED_LABEL.toLowerCase()} neighborhood shop for
+              everyday driving and short trips. Browse what is open below, then call us to hold your car.
             </p>
 
             <ul className="home-intro-highlights">
               <li>
                 <strong>Gold &amp; Silver</strong>
                 <span>Nicer or everyday local cars</span>
+              </li>
+              <li>
+                <strong>Weekly rates</strong>
+                <span>{WEEKLY_RATES_NOTE}</span>
               </li>
               <li>
                 <strong>25+ to rent</strong>

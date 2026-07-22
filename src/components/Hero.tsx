@@ -1,4 +1,4 @@
-import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { PHONE_DISPLAY, PHONE_TEL, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
 
 export function Hero() {
   return (
@@ -8,9 +8,10 @@ export function Hero() {
       </div>
       <div className="container hero-content">
         <p className="label hero-in">J&amp;M Car Rental LLC</p>
+        <p className="hero-tagline hero-in">{VETERAN_OWNED_LABEL}</p>
         <h1 className="hero-in">Car rentals in Virginia Beach</h1>
         <p className="hero-lead hero-in">
-          Everyday cars for work, errands, and travel. Call us to book.
+          Everyday cars for work, errands, and travel. Call us to book. {WEEKLY_RATES_NOTE}
         </p>
         <div className="hero-actions hero-in">
           <a className="btn btn-hero" href="#available-cars">

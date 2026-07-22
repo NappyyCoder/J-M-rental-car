@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 import { ABOUT_IMAGE_URL } from '../lib/assets'
-import { ADDRESS_LINE1, ADDRESS_LINE2, DEPOSIT_RANGE, HOURS, MAPS_DIRECTIONS_URL, PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { ADDRESS_LINE1, ADDRESS_LINE2, DEPOSIT_RANGE, HOURS, MAPS_DIRECTIONS_URL, PHONE_DISPLAY, PHONE_TEL, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
 import { LocationMap } from './LocationMap'
 import { SafeImage } from './SafeImage'
 
 const values = [
   {
-    title: 'Local and accountable',
+    title: VETERAN_OWNED_LABEL,
     text: 'We are right here in Virginia Beach. When you call, you talk to us, not a big corporate line.',
   },
   {
@@ -44,13 +44,14 @@ export function About() {
             <p className="label">Who we are</p>
             <h2>A local rental shop in Virginia Beach</h2>
             <p>
-              J&amp;M Car Rental LLC rents clean, dependable cars for day to day use and short trips.
+              J&amp;M Car Rental LLC is a {VETERAN_OWNED_LABEL.toLowerCase()} neighborhood shop for
+              clean, dependable cars for day to day use and short trips.
               Pick Gold if you want a nicer ride, or Silver if you want something practical and
               affordable.
             </p>
             <p>
               Check the website for open cars, call us to hold one, and pick it up during our
-              business hours. That is the whole process.
+              business hours. {WEEKLY_RATES_NOTE}
             </p>
             <div className="about-actions">
               <Link className="btn btn-primary btn-sm" to="/vehicles">

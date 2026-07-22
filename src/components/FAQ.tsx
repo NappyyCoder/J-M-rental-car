@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { DEPOSIT_RANGE, PHONE_DISPLAY } from '../lib/contact'
+import { DEPOSIT_RANGE, PHONE_DISPLAY, WEEKLY_RATES_NOTE } from '../lib/contact'
 
 type Props = {
   showIntro?: boolean
@@ -22,6 +22,10 @@ const faqs = [
   {
     q: 'Can someone else drive the car?',
     a: 'Yes. An extra driver costs $50. They need a valid license too.',
+  },
+  {
+    q: 'Do you offer weekly rates or specials?',
+    a: WEEKLY_RATES_NOTE,
   },
   {
     q: 'What are your hours?',

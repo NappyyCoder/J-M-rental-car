@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { PHONE_DISPLAY, PHONE_TEL, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
 import { Logo } from './Logo'
 
 export function Footer() {
@@ -11,6 +11,7 @@ export function Footer() {
             <Logo variant="footer" className="brand-logo--footer" />
           </Link>
           <p>Virginia Beach, VA</p>
+          <p className="footer-tagline">{VETERAN_OWNED_LABEL}</p>
           <p className="footer-address">
             3692 S Plaza Trail #10
             <br />
@@ -28,6 +29,7 @@ export function Footer() {
         </nav>
         <div className="footer-contact">
           <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
+          <p className="footer-hours">{WEEKLY_RATES_NOTE}</p>
           <p className="footer-hours">Mon to Fri 9:30 to 5:30. Sat 10 to 2.</p>
           <p>© {new Date().getFullYear()} J&amp;M Car Rental LLC</p>
         </div>

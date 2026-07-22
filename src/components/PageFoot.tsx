@@ -1,4 +1,4 @@
-import { HOURS, PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
+import { HOURS, PHONE_DISPLAY, PHONE_TEL, WEEKLY_RATES_NOTE } from '../lib/contact'
 
 type Props = {
   title: string
@@ -17,6 +17,7 @@ export function PageFoot({ title, text }: Props) {
         <p className="label page-foot-label">Get started</p>
         <h2 className="page-foot-title">{title}</h2>
         <p className="page-foot-text">{text}</p>
+        <p className="page-foot-note">{WEEKLY_RATES_NOTE}</p>
       </div>
       <div className="page-foot-aside">
         <a className="btn btn-primary btn-lg page-foot-call" href={`tel:${PHONE_TEL}`}>

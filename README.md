@@ -21,6 +21,8 @@ npm run dev
 5. Create a staff user: **Authentication → Users → Add user** (email + password)
 6. Sign in at `/admin` with that account
 
+**Running on the free plan?** See [`docs/SUPABASE-FREE-TIER.md`](docs/SUPABASE-FREE-TIER.md) for photo strategy, pause prevention, and when to upgrade (60+ cars is fine on free).
+
 ## Features
 
 - Public site: hours, requirements, FAQ, contact

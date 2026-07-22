@@ -18,3 +18,7 @@ export const HOURS = {
 } as const
 
 export const DEPOSIT_RANGE = '$150 to $200'
+
+export const VETERAN_OWNED_LABEL = 'Veteran owned and operated'
+
+export const WEEKLY_RATES_NOTE = 'Call the office for weekly rates and specials.'
