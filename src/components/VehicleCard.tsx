@@ -1,0 +1,60 @@
+import type { CSSProperties } from 'react'
+import type { Vehicle, VehicleCategory } from '../types'
+import { isAvailableOn } from '../lib/dates'
+import { packageLabel } from '../lib/packages'
+
+const categoryLabel: Record<VehicleCategory, string> = {
+  economy: 'Economy',
+  sedan: 'Sedan',
+  suv: 'SUV',
+  truck: 'Truck',
+  van: 'Van',
+}
+
+type Props = {
+  vehicle: Vehicle
+  date: string
+  index?: number
+}
+
+export function VehicleCard({ vehicle, date, index = 0 }: Props) {
+  const available = isAvailableOn(vehicle, date)
+
+  return (
+    <article
+      className={`vehicle vehicle--${vehicle.package}`}
+      style={{ '--card-delay': `${Math.min(index, 8) * 50}ms` } as CSSProperties}
+    >
+      <div className="vehicle-media">
+        {vehicle.imageUrl ? (
+          <img src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} />
+        ) : (
+          <div className="vehicle-placeholder">No photo</div>
+        )}
+        <span className={`package-badge package-badge--${vehicle.package}`}>
+          {packageLabel(vehicle.package)}
+        </span>
+        {!available && <span className="vehicle-tag booked">Booked</span>}
+      </div>
+      <div className="vehicle-body">
+        <p className="vehicle-series">{categoryLabel[vehicle.category]}</p>
+        <h3>
+          {vehicle.year} {vehicle.make} {vehicle.model}
+        </h3>
+        <div className="vehicle-foot">
+          <span className="vehicle-rate">
+            ${vehicle.dailyRate}
+            <small>/day</small>
+          </span>
+          {available ? (
+            <a className="vehicle-link" href="tel:+17035631125">
+              Reserve
+            </a>
+          ) : (
+            <span className="vehicle-link muted">Unavailable</span>
+          )}
+        </div>
+      </div>
+    </article>
+  )
+}
