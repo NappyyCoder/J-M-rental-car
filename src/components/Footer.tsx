@@ -6,7 +6,9 @@ export function Footer() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <strong>J&amp;M Car Rental LLC</strong>
+          <Link to="/" className="footer-brand-link">
+            <strong>J&amp;M Car Rental LLC</strong>
+          </Link>
           <p>Virginia Beach, VA</p>
           <p className="footer-address">
             3692 S Plaza Trail #10
@@ -15,6 +17,7 @@ export function Footer() {
           </p>
         </div>
         <nav className="footer-nav" aria-label="Footer">
+          <Link to="/">Home</Link>
           <Link to="/vehicles">Vehicles</Link>
           <Link to="/about">About</Link>
           <Link to="/services">Services</Link>

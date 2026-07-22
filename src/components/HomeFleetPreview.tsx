@@ -36,17 +36,16 @@ export function HomeFleetPreview() {
       <div className="container">
         <div className="home-fleet-head">
           <div>
-            <p className="label">Today&apos;s fleet</p>
-            <h2>Cars available for {formatDate(date)}</h2>
-            <p>Choose a car below and call us to reserve it.</p>
+            <p className="label">Available cars</p>
+            <h2>{formatDate(date)}</h2>
           </div>
-          <Link className="text-link" to="/vehicles">
-            Full fleet page
+          <Link className="btn btn-outline btn-sm" to="/vehicles">
+            See all cars
           </Link>
         </div>
 
         {isDemoFleet && (
-          <p className="home-fleet-note">Sample cars shown until real inventory is added in Admin.</p>
+          <p className="home-fleet-note">Sample cars for preview.</p>
         )}
 
         <div className="home-fleet-toolbar">
@@ -77,23 +76,19 @@ export function HomeFleetPreview() {
           </div>
         </div>
 
-        {vehiclePackage !== 'all' && (
-          <p className="package-filter-note">{PACKAGE_INFO[vehiclePackage].summary}</p>
-        )}
-
         {!loading && (
           <p className="home-fleet-count">
-            {available.length} {available.length === 1 ? 'car' : 'cars'} available
+            {available.length} {available.length === 1 ? 'car' : 'cars'} open
           </p>
         )}
 
         {loading ? (
-          <p className="home-fleet-status">Loading vehicles…</p>
+          <p className="home-fleet-status">Loading…</p>
         ) : available.length === 0 ? (
           <div className="home-fleet-empty">
-            <p>No cars available for that date. Try another date or package, or call us for help.</p>
+            <p>Nothing open for that date. Try another day or call us.</p>
             <Link className="btn btn-outline btn-sm" to="/vehicles">
-              Browse all cars
+              See all cars
             </Link>
           </div>
         ) : (

@@ -80,6 +80,27 @@ export function isAvailableOn(vehicle: Vehicle, date: string): boolean {
   return !vehicle.unavailableDates.includes(date)
 }
 
+/** First open day after fromDate, searching up to maxDays ahead. */
+export function nextAvailableDate(
+  vehicle: Vehicle,
+  fromDate: string,
+  maxDays = 120,
+): string | null {
+  if (isAvailableOn(vehicle, fromDate)) return null
+
+  const blocked = new Set(vehicle.unavailableDates)
+  const cursor = parseISO(fromDate)
+  cursor.setDate(cursor.getDate() + 1)
+
+  for (let i = 0; i < maxDays; i++) {
+    const iso = toISO(cursor)
+    if (!blocked.has(iso)) return iso
+    cursor.setDate(cursor.getDate() + 1)
+  }
+
+  return null
+}
+
 export function formatDisplayDate(iso: string) {
   return parseISO(iso).toLocaleDateString(undefined, {
     weekday: 'short',

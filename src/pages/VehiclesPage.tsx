@@ -8,8 +8,8 @@ export function VehiclesPage() {
       <PageHero
         compact
         label="Fleet"
-        title="Available vehicles"
-        lead="Choose Gold or Silver, select your date, and call us to reserve."
+        title="Our vehicles"
+        lead="Choose Gold or Silver, pick your date, and call us to reserve."
       />
       <FleetSection variant="page" />
     </PageLayout>

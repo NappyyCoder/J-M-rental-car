@@ -37,15 +37,26 @@ export function FleetSection({ showHead = true, variant = 'default' }: Props) {
   const vehiclePackage = packageFromSearch(searchParams)
   const [date, setDate] = useState(todayISO())
   const [category, setCategory] = useState<VehicleCategory | 'all'>('all')
-  const [availableOnly, setAvailableOnly] = useState(true)
+  const [availableOnly, setAvailableOnly] = useState(!isPage)
 
   const filtered = useMemo(() => {
-    return vehicles.filter((v) => {
+    const list = vehicles.filter((v) => {
       if (vehiclePackage !== 'all' && v.package !== vehiclePackage) return false
       if (category !== 'all' && v.category !== category) return false
       if (availableOnly && !isAvailableOn(v, date)) return false
       return true
     })
+
+    if (!availableOnly) {
+      return [...list].sort((a, b) => {
+        const aAvailable = isAvailableOn(a, date)
+        const bAvailable = isAvailableOn(b, date)
+        if (aAvailable === bAvailable) return 0
+        return aAvailable ? -1 : 1
+      })
+    }
+
+    return list
   }, [vehicles, vehiclePackage, category, availableOnly, date])
 
   const availableCount = filtered.filter((v) => isAvailableOn(v, date)).length
@@ -101,7 +112,7 @@ export function FleetSection({ showHead = true, variant = 'default' }: Props) {
           {isPage && (
             <div className="fleet-panel-head">
               <h2>Find a vehicle</h2>
-              <p>Filter by package, date, and type. Available cars can be reserved by phone.</p>
+              <p>Filter by package, date, and type. Booked cars show when they open again.</p>
             </div>
           )}
 
@@ -149,19 +160,17 @@ export function FleetSection({ showHead = true, variant = 'default' }: Props) {
                 ))}
               </select>
             </div>
-            {!isPage && (
-              <div className="field">
-                <label htmlFor="fleet-avail">Show</label>
-                <select
-                  id="fleet-avail"
-                  value={availableOnly ? 'available' : 'all'}
-                  onChange={(e) => setAvailableOnly(e.target.value === 'available')}
-                >
-                  <option value="available">Available only</option>
-                  <option value="all">Show all</option>
-                </select>
-              </div>
-            )}
+            <div className="field">
+              <label htmlFor="fleet-avail">Show</label>
+              <select
+                id="fleet-avail"
+                value={availableOnly ? 'available' : 'all'}
+                onChange={(e) => setAvailableOnly(e.target.value === 'available')}
+              >
+                <option value="available">Available only</option>
+                <option value="all">All cars</option>
+              </select>
+            </div>
             <p className="fleet-count">
               {loading
                 ? 'Loading…'

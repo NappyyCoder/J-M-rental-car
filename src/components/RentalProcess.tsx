@@ -1,46 +1,38 @@
 import { Link } from 'react-router-dom'
-import { DEPOSIT_RANGE, PHONE_DISPLAY } from '../lib/contact'
+import { ABOUT_IMAGE_URL, DEMO_VEHICLE_IMAGES } from '../lib/assets'
+import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
 import { PACKAGE_INFO, PACKAGE_ORDER } from '../lib/packages'
-
-const aboutPoints = [
-  {
-    title: 'Local and accountable',
-    text: 'We are right here in Virginia Beach. When you call, you talk to us directly.',
-  },
-  {
-    title: 'Straightforward terms',
-    text: 'We explain age, deposit, and payment rules up front. No surprises.',
-  },
-  {
-    title: 'Gold and Silver options',
-    text: 'Pick a premium Gold car or a practical Silver rental that fits your budget.',
-  },
-]
+import { SafeImage } from './SafeImage'
 
 const steps = [
   {
     step: '1',
     title: 'Pick your date',
-    text: 'Choose the day you need a car and browse what is open below.',
+    image: '/images/road-trip.jpg',
   },
   {
     step: '2',
     title: 'Call to book',
-    text: `Call ${PHONE_DISPLAY} during business hours to hold your car.`,
+    image: ABOUT_IMAGE_URL,
   },
   {
     step: '3',
     title: 'Pick up',
-    text: `Bring your license and a debit or credit card. Deposits are usually ${DEPOSIT_RANGE}.`,
+    image: '/images/sedan.jpg',
   },
 ]
 
 const trustItems = [
-  { value: '25+', label: 'Must be 25 or older' },
-  { value: DEPOSIT_RANGE, label: 'Typical deposit' },
-  { value: 'Mon to Sat', label: 'Open most days' },
+  { value: '25+', label: 'Age 25+' },
+  { value: DEPOSIT_RANGE, label: 'Deposit' },
+  { value: 'Mon–Sat', label: 'Open' },
   { value: 'Local', label: 'Virginia Beach' },
 ]
+
+const packageImages = {
+  gold: DEMO_VEHICLE_IMAGES.goldSedan,
+  silver: DEMO_VEHICLE_IMAGES.silverCivic,
+} as const
 
 type Props = {
   variant?: 'default' | 'home'
@@ -53,75 +45,111 @@ export function RentalProcess({ variant = 'default' }: Props) {
     return (
       <section className="section home-main" id="about">
         <div className="container">
-          <div className="home-panel">
-            <div className="home-panel-head">
-              <p className="label">About J&amp;M Car Rental</p>
-              <h2>A local rental shop you can trust</h2>
-              <p>
-                J&amp;M Car Rental LLC offers clean, dependable cars for day to day use and short
-                trips in Virginia Beach. Browse what is open online, call us to reserve, and pick
-                up during our business hours.
-              </p>
-            </div>
+          <div className="home-intro-copy">
+            <p className="label">About J&amp;M</p>
+            <h2>Local rentals in Virginia Beach</h2>
+            <p className="home-intro-lead">
+              J&amp;M Car Rental LLC is a neighborhood shop for everyday driving and short trips.
+              Browse what is open below, then call us to hold your car.
+            </p>
 
-            <div className="home-about-grid">
-              {aboutPoints.map((item) => (
-                <article key={item.title} className="home-about-card">
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                </article>
-              ))}
-            </div>
+            <ul className="home-intro-highlights">
+              <li>
+                <strong>Gold &amp; Silver</strong>
+                <span>Premium or everyday cars</span>
+              </li>
+              <li>
+                <strong>25+ to rent</strong>
+                <span>{DEPOSIT_RANGE} deposit at pickup</span>
+              </li>
+              <li>
+                <strong>Mon through Sat</strong>
+                <span>
+                  {HOURS.weekdays.time}. Sat {HOURS.saturday.time}.
+                </span>
+              </li>
+            </ul>
 
-            <div className="home-panel-subhead">
-              <h3>How it works</h3>
-              <p>Rent a car in three simple steps.</p>
+            <div className="home-intro-actions">
+              <Link className="btn btn-primary home-intro-cta" to="/about">
+                Read our story
+              </Link>
+              <a className="btn btn-outline" href="#available-cars">
+                Browse cars
+              </a>
+              <a className="btn btn-outline" href={`tel:${PHONE_TEL}`}>
+                Call {PHONE_DISPLAY}
+              </a>
             </div>
+          </div>
 
-            <div className="process-grid process-grid--home">
-              {steps.map((item) => (
-                <article key={item.step} className="process-card process-card--home">
-                  <span className="process-step">{item.step}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                </article>
-              ))}
-            </div>
+          <p className="home-section-label">How it works</p>
+          <div className="home-steps-visual" aria-label="How it works">
+            {steps.map((item) => (
+              <article key={item.step} className="home-step-card">
+                <div className="home-step-media">
+                  <SafeImage src={item.image} alt="" className="home-step-photo" />
+                  <span className="home-step-badge">{item.step}</span>
+                </div>
+                <h3>{item.title}</h3>
+              </article>
+            ))}
+          </div>
 
-            <div className="home-packages-row">
-              {PACKAGE_ORDER.map((pkg) => (
-                <Link
-                  key={pkg}
-                  to={`/vehicles?package=${pkg}`}
-                  className={`home-package-link home-package-link--${pkg}`}
-                >
+          <p className="home-section-label">Choose a package</p>
+          <div className="home-packages-visual">
+            {PACKAGE_ORDER.map((pkg) => (
+              <Link
+                key={pkg}
+                to={`/vehicles?package=${pkg}`}
+                className={`home-package-visual home-package-visual--${pkg}`}
+              >
+                <SafeImage
+                  src={packageImages[pkg]}
+                  alt=""
+                  className="home-package-photo"
+                  fallbackCategory={pkg === 'gold' ? 'sedan' : 'economy'}
+                />
+                <div className="home-package-overlay">
                   <span className={`package-badge package-badge--${pkg}`}>
                     {PACKAGE_INFO[pkg].label}
                   </span>
-                  <p>{PACKAGE_INFO[pkg].summary}</p>
-                </Link>
-              ))}
-            </div>
-
-            <div className="trust-bar-inline trust-bar-inline--home" aria-label="Rental highlights">
-              {trustItems.map((item) => (
-                <div key={item.label} className="trust-item">
-                  <strong>{item.value}</strong>
-                  <span>{item.label}</span>
+                  <p>{pkg === 'gold' ? 'Premium cars' : 'Everyday cars'}</p>
                 </div>
-              ))}
-            </div>
-
-            <p className="home-about-more">
-              <Link className="text-link text-link--arrow" to="/about">
-                Learn more about our company
               </Link>
-            </p>
+            ))}
+          </div>
+
+          <div className="trust-bar-inline trust-bar-inline--home" aria-label="Rental highlights">
+            {trustItems.map((item) => (
+              <div key={item.label} className="trust-item">
+                <strong>{item.value}</strong>
+                <span>{item.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
     )
   }
+
+  const defaultSteps = [
+    {
+      step: '1',
+      title: 'Pick your date',
+      text: 'Choose the day you need a car and browse what is open below.',
+    },
+    {
+      step: '2',
+      title: 'Call to book',
+      text: `Call ${PHONE_DISPLAY} during business hours to hold your car.`,
+    },
+    {
+      step: '3',
+      title: 'Pick up',
+      text: `Bring your license and a debit or credit card. Deposits are usually ${DEPOSIT_RANGE}.`,
+    },
+  ]
 
   return (
     <section className="section section-tight rental-process rental-process--home" id="how-it-works">
@@ -132,7 +160,7 @@ export function RentalProcess({ variant = 'default' }: Props) {
         </div>
 
         <div className="process-grid">
-          {steps.map((item) => (
+          {defaultSteps.map((item) => (
             <article key={item.step} className="process-card">
               <span className="process-step">{item.step}</span>
               <h3>{item.title}</h3>

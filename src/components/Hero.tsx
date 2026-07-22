@@ -12,20 +12,14 @@ export function Hero() {
       <div className="container hero-content">
         <p className="label hero-in">J&amp;M Car Rental LLC</p>
         <h1 className="hero-in">Car rentals in Virginia Beach</h1>
-        <p className="hero-lead hero-in">
-          Learn about our shop, then browse cars available for the day you need.
-        </p>
         <div className="hero-actions hero-in">
-          <a className="btn btn-hero" href="#about">
-            About our company
+          <a className="btn btn-hero" href="#available-cars">
+            Browse cars
           </a>
-          <a className="btn btn-hero-outline" href="#available-cars">
-            See today&apos;s cars
+          <a className="btn btn-hero-outline" href={`tel:${PHONE_TEL}`}>
+            Call {PHONE_DISPLAY}
           </a>
         </div>
-        <p className="hero-call hero-in">
-          Or call <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a> to book
-        </p>
       </div>
     </section>
   )

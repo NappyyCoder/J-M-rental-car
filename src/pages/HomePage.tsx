@@ -13,7 +13,7 @@ export function HomePage() {
       <div className="container home-foot-wrap">
         <PageFoot
           title="Ready to rent?"
-          text="Call during business hours. Debit or credit card required at pickup."
+          text="Call us. Bring a debit or credit card at pickup."
         />
       </div>
     </PageLayout>

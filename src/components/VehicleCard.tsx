@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import type { Vehicle, VehicleCategory } from '../types'
 import { PHONE_TEL } from '../lib/contact'
-import { isAvailableOn } from '../lib/dates'
+import { formatDisplayDate, isAvailableOn, nextAvailableDate } from '../lib/dates'
 import { packageLabel } from '../lib/packages'
 import { SafeImage } from './SafeImage'
 
@@ -21,10 +21,11 @@ type Props = {
 
 export function VehicleCard({ vehicle, date, index = 0 }: Props) {
   const available = isAvailableOn(vehicle, date)
+  const availableAgain = available ? null : nextAvailableDate(vehicle, date)
 
   return (
     <article
-      className={`vehicle vehicle--${vehicle.package}`}
+      className={`vehicle vehicle--${vehicle.package}${available ? '' : ' vehicle--booked'}`}
       style={{ '--card-delay': `${Math.min(index, 8) * 50}ms` } as CSSProperties}
     >
       <div className="vehicle-media">
@@ -43,6 +44,13 @@ export function VehicleCard({ vehicle, date, index = 0 }: Props) {
         <h3>
           {vehicle.year} {vehicle.make} {vehicle.model}
         </h3>
+        {!available && (
+          <p className="vehicle-available-again">
+            {availableAgain
+              ? `Available again ${formatDisplayDate(availableAgain)}`
+              : 'Call us for availability'}
+          </p>
+        )}
         <div className="vehicle-foot">
           <span className="vehicle-rate">
             ${vehicle.dailyRate}
