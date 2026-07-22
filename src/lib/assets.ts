@@ -1,7 +1,13 @@
 import type { VehicleCategory } from '../types'
 
 /** Bundled images — always available, no external CDN dependency */
+/** Home hero uses CSS gradient only — stock hero.jpg is luxury dealership imagery. */
 export const HERO_IMAGE_URL = '/images/hero.jpg'
+
+/** Real J&M fleet photos for marketing (not stock luxury cars). */
+export const HOME_GOLD_PACKAGE_IMAGE = '/images/fleet/audi-a8.jpeg'
+export const HOME_SILVER_PACKAGE_IMAGE = '/images/fleet/chevy-cruze.jpeg'
+
 export const ABOUT_IMAGE_URL = '/images/about.jpg'
 
 export const VEHICLE_FALLBACK_IMAGES: Record<VehicleCategory, string> = {

@@ -1,0 +1,145 @@
+[
+  {
+    "make": "Audi",
+    "model": "A8",
+    "year": 2012,
+    "category": "sedan",
+    "package": "gold",
+    "dailyRate": 99,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/audi-a8.jpeg"
+  },
+  {
+    "make": "Lincoln",
+    "model": "MKS",
+    "year": 2012,
+    "category": "sedan",
+    "package": "gold",
+    "dailyRate": 89,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/lincoln-mks.jpeg"
+  },
+  {
+    "make": "Volvo",
+    "model": "S60",
+    "year": 2014,
+    "category": "sedan",
+    "package": "gold",
+    "dailyRate": 85,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/volvo-s60.jpeg"
+  },
+  {
+    "make": "Buick",
+    "model": "LaCrosse",
+    "year": 2013,
+    "category": "sedan",
+    "package": "gold",
+    "dailyRate": 79,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/buick-lacrosse.jpeg"
+  },
+  {
+    "make": "Volkswagen",
+    "model": "CC",
+    "year": 2013,
+    "category": "sedan",
+    "package": "gold",
+    "dailyRate": 75,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/vw-cc.jpeg"
+  },
+  {
+    "make": "Nissan",
+    "model": "Pathfinder",
+    "year": 2018,
+    "category": "suv",
+    "package": "silver",
+    "dailyRate": 69,
+    "seats": 7,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/nissan-pathfinder-silver.jpeg"
+  },
+  {
+    "make": "Nissan",
+    "model": "Pathfinder",
+    "year": 2014,
+    "category": "suv",
+    "package": "silver",
+    "dailyRate": 65,
+    "seats": 7,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/nissan-pathfinder-gray.jpeg"
+  },
+  {
+    "make": "GMC",
+    "model": "Terrain",
+    "year": 2013,
+    "category": "suv",
+    "package": "silver",
+    "dailyRate": 65,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/gmc-terrain.jpeg"
+  },
+  {
+    "make": "Chevrolet",
+    "model": "Equinox",
+    "year": 2012,
+    "category": "suv",
+    "package": "silver",
+    "dailyRate": 59,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/chevy-equinox.jpeg"
+  },
+  {
+    "make": "Subaru",
+    "model": "Outback",
+    "year": 2012,
+    "category": "suv",
+    "package": "silver",
+    "dailyRate": 59,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/subaru-outback.jpeg"
+  },
+  {
+    "make": "Chevrolet",
+    "model": "Malibu",
+    "year": 2014,
+    "category": "sedan",
+    "package": "silver",
+    "dailyRate": 55,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/chevy-malibu.jpeg"
+  },
+  {
+    "make": "Chevrolet",
+    "model": "Sonic",
+    "year": 2014,
+    "category": "economy",
+    "package": "silver",
+    "dailyRate": 45,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/chevy-sonic.jpeg"
+  },
+  {
+    "make": "Chevrolet",
+    "model": "Cruze",
+    "year": 2013,
+    "category": "economy",
+    "package": "silver",
+    "dailyRate": 45,
+    "seats": 5,
+    "transmission": "automatic",
+    "imageUrl": "/images/fleet/chevy-cruze.jpeg"
+  }
+]

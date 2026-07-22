@@ -18,6 +18,7 @@ import {
   seedDemoFleet as seedDemoFleetApi,
   toggleDateUnavailable as toggleDateApi,
   unblockDates as unblockDatesApi,
+  updateVehicle as updateVehicleApi,
 } from '../lib/vehicles'
 
 type FleetContextValue = {
@@ -31,6 +32,7 @@ type FleetContextValue = {
   configured: boolean
   refresh: () => Promise<void>
   add: (input: VehicleInput, image: File | string) => Promise<Vehicle>
+  update: (id: string, input: VehicleInput, image?: File | string) => Promise<Vehicle>
   remove: (id: string) => Promise<void>
   toggleUnavailable: (id: string, date: string) => Promise<void>
   blockDates: (id: string, dates: string[]) => Promise<void>
@@ -81,6 +83,11 @@ export function FleetProvider({ children }: { children: ReactNode }) {
       refresh,
       add: async (input, image) => {
         const vehicle = await addVehicleApi(input, image)
+        await refresh()
+        return vehicle
+      },
+      update: async (id, input, image) => {
+        const vehicle = await updateVehicleApi(id, input, image)
         await refresh()
         return vehicle
       },

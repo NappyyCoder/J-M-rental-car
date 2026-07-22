@@ -1,25 +1,13 @@
 import { Link } from 'react-router-dom'
-import { ABOUT_IMAGE_URL, DEMO_VEHICLE_IMAGES } from '../lib/assets'
+import { HOME_GOLD_PACKAGE_IMAGE, HOME_SILVER_PACKAGE_IMAGE } from '../lib/assets'
 import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, PHONE_TEL } from '../lib/contact'
 import { PACKAGE_INFO, PACKAGE_ORDER } from '../lib/packages'
 import { SafeImage } from './SafeImage'
 
 const steps = [
-  {
-    step: '1',
-    title: 'Pick your date',
-    image: '/images/road-trip.jpg',
-  },
-  {
-    step: '2',
-    title: 'Call to book',
-    image: ABOUT_IMAGE_URL,
-  },
-  {
-    step: '3',
-    title: 'Pick up',
-    image: '/images/sedan.jpg',
-  },
+  { step: '1', title: 'Pick your date' },
+  { step: '2', title: 'Call to book' },
+  { step: '3', title: 'Pick up' },
 ]
 
 const trustItems = [
@@ -34,8 +22,8 @@ const trustItems = [
 ] as const
 
 const packageImages = {
-  gold: DEMO_VEHICLE_IMAGES.goldSedan,
-  silver: DEMO_VEHICLE_IMAGES.silverCivic,
+  gold: HOME_GOLD_PACKAGE_IMAGE,
+  silver: HOME_SILVER_PACKAGE_IMAGE,
 } as const
 
 type Props = {
@@ -60,7 +48,7 @@ export function RentalProcess({ variant = 'default' }: Props) {
             <ul className="home-intro-highlights">
               <li>
                 <strong>Gold &amp; Silver</strong>
-                <span>Premium or everyday cars</span>
+                <span>Nicer or everyday local cars</span>
               </li>
               <li>
                 <strong>25+ to rent</strong>
@@ -90,11 +78,8 @@ export function RentalProcess({ variant = 'default' }: Props) {
           <p className="home-section-label">How it works</p>
           <div className="home-steps-visual" aria-label="How it works">
             {steps.map((item) => (
-              <article key={item.step} className="home-step-card">
-                <div className="home-step-media">
-                  <SafeImage src={item.image} alt="" className="home-step-photo" />
-                  <span className="home-step-badge">{item.step}</span>
-                </div>
+              <article key={item.step} className="home-step-card home-step-card--plain">
+                <span className="home-step-badge home-step-badge--plain">{item.step}</span>
                 <h3>{item.title}</h3>
               </article>
             ))}
@@ -118,7 +103,7 @@ export function RentalProcess({ variant = 'default' }: Props) {
                   <span className={`package-badge package-badge--${pkg}`}>
                     {PACKAGE_INFO[pkg].label}
                   </span>
-                  <p>{pkg === 'gold' ? 'Premium cars' : 'Everyday cars'}</p>
+                  <p>{pkg === 'gold' ? 'Nicer local cars' : 'Everyday cars'}</p>
                 </div>
               </Link>
             ))}

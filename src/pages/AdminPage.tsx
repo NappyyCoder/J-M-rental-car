@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useFleet } from '../context/FleetContext'
 import { VehicleAvailabilityEditor } from '../components/VehicleAvailabilityEditor'
+import { VehicleEditForm } from '../components/VehicleEditForm'
 import { formatErrorWithHint } from '../lib/errors'
 import { STOCK_VEHICLE_PHOTOS } from '../lib/demoFleetSeed'
 import { eachDateISO, formatDisplayDate, isAvailableOn, todayISO } from '../lib/dates'
@@ -67,7 +68,7 @@ export function AdminPage() {
                 <li>If the database already exists, also run <code>supabase/migration-add-package.sql</code></li>
                 <li>Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to <code>.env</code></li>
                 <li>Create a staff user in Supabase → Authentication → Users</li>
-                <li>Sign in at <code>/admin</code> and click <strong>Load demo cars</strong>, or run <code>supabase/seed-demo-vehicles.sql</code></li>
+                <li>Sign in at <code>/admin</code> and click <strong>Load fleet cars</strong>, or run <code>supabase/seed-demo-vehicles.sql</code></li>
               </ol>
               <Link to="/" className="btn btn-outline">
                 Back to homepage
@@ -168,7 +169,7 @@ export function AdminPage() {
 }
 
 function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
-  const { dbVehicles, add, remove, blockDates, unblockDates, seedDemo } = useFleet()
+  const { dbVehicles, add, update, remove, blockDates, unblockDates, seedDemo } = useFleet()
   const [form, setForm] = useState<VehicleInput>(emptyForm)
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [stockImage, setStockImage] = useState('')
@@ -266,8 +267,11 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
 
   async function onSeedDemo() {
     if (
-      dbVehicles.length > 0 &&
-      !confirm('This only works on an empty fleet. Delete existing cars first. Try anyway?')
+      !confirm(
+        dbVehicles.length > 0
+          ? 'Replace the entire fleet with the 13 J&M cars and photos? Unavailable dates will be cleared.'
+          : 'Load the 13 J&M fleet cars with photos from the site?',
+      )
     ) {
       return
     }
@@ -275,7 +279,7 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
     setMsg('')
     try {
       const count = await seedDemo()
-      setMsg(`Loaded ${count} demo cars. Check the homepage and Vehicles page.`)
+      setMsg(`Loaded ${count} fleet cars. Check the homepage and Vehicles page.`)
     } catch (err) {
       setMsg(formatErrorWithHint(err))
     } finally {
@@ -346,29 +350,42 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
         </button>
 
         {expanded && (
-          <VehicleAvailabilityEditor
-            vehicleId={v.id}
-            vehicleTitle={title}
-            unavailableDates={v.unavailableDates}
-            disabled={busy}
-            onAddDate={(targetDate) => onAddUnavailable(v.id, title, [targetDate])}
-            onAddRange={(start, end) =>
-              onAddUnavailable(v.id, title, eachDateISO(start, end))
-            }
-            onRemoveDate={(targetDate) => onRemoveUnavailable(v.id, title, [targetDate])}
-            onClearAll={() => onRemoveUnavailable(v.id, title, v.unavailableDates)}
-            onDelete={() => {
-              if (!confirm(`Remove ${title} from the fleet? This cannot be undone.`)) return
-              setBusy(true)
-              void remove(v.id)
-                .then(() => {
-                  setExpandedId(null)
-                  setMsg(`${title} removed from the fleet.`)
-                })
-                .catch((err) => setMsg(formatErrorWithHint(err)))
-                .finally(() => setBusy(false))
-            }}
-          />
+          <div className="admin-fleet-expanded">
+            <VehicleEditForm
+              key={v.id}
+              vehicle={v}
+              disabled={busy}
+              onSave={async (input, image) => {
+                const updated = await update(v.id, input, image)
+                setMsg(`Updated ${input.name || `${input.make} ${input.model}`}.`)
+                return updated.imageUrl
+              }}
+            />
+            <div className="admin-fleet-expanded-divider" aria-hidden="true" />
+            <VehicleAvailabilityEditor
+              vehicleId={v.id}
+              vehicleTitle={title}
+              unavailableDates={v.unavailableDates}
+              disabled={busy}
+              onAddDate={(targetDate) => onAddUnavailable(v.id, title, [targetDate])}
+              onAddRange={(start, end) =>
+                onAddUnavailable(v.id, title, eachDateISO(start, end))
+              }
+              onRemoveDate={(targetDate) => onRemoveUnavailable(v.id, title, [targetDate])}
+              onClearAll={() => onRemoveUnavailable(v.id, title, v.unavailableDates)}
+              onDelete={() => {
+                if (!confirm(`Remove ${title} from the fleet? This cannot be undone.`)) return
+                setBusy(true)
+                void remove(v.id)
+                  .then(() => {
+                    setExpandedId(null)
+                    setMsg(`${title} removed from the fleet.`)
+                  })
+                  .catch((err) => setMsg(formatErrorWithHint(err)))
+                  .finally(() => setBusy(false))
+              }}
+            />
+          </div>
         )}
       </li>
     )
@@ -417,7 +434,7 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
       )}
 
       {msg && (
-        <p className={`admin-banner${msg.includes('saved') || msg.includes('Loaded') || msg.includes('Updated') ? ' success' : ''}`}>
+        <p className={`admin-banner${msg.includes('saved') || msg.includes('Loaded') || msg.includes('Updated') || msg.includes('Changes saved') ? ' success' : ''}`}>
           {msg}
         </p>
       )}
@@ -609,20 +626,17 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
             <div>
               <h2>Fleet list</h2>
               <p className="admin-panel-sub">
-                See which cars are available on the filter date. Click a car to enter unavailable
-                dates.
+                Click a car to edit details, pricing, or unavailable dates.
               </p>
             </div>
-            {dbVehicles.length === 0 && (
-              <button
-                type="button"
-                className="btn btn-primary btn-sm"
-                disabled={busy}
-                onClick={() => void onSeedDemo()}
-              >
-                Load demo cars
-              </button>
-            )}
+            <button
+              type="button"
+              className="btn btn-outline btn-sm"
+              disabled={busy}
+              onClick={() => void onSeedDemo()}
+            >
+              {dbVehicles.length === 0 ? 'Load fleet cars' : 'Replace fleet'}
+            </button>
           </div>
 
           <div className="admin-fleet-filters" role="tablist" aria-label="Fleet filter">
@@ -649,7 +663,7 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
                 disabled={busy}
                 onClick={() => void onSeedDemo()}
               >
-                Load 10 demo cars
+                Load 13 fleet cars
               </button>
               <p className="admin-empty-note">
                 Or add cars one at a time with the form on the left.

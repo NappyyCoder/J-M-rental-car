@@ -119,6 +119,51 @@ export async function removeVehicle(id: string): Promise<void> {
   if (error) throw error
 }
 
+export async function updateVehicle(
+  id: string,
+  input: VehicleInput,
+  image?: File | string,
+): Promise<Vehicle> {
+  const supabase = getSupabase()
+
+  const patch: Record<string, string | number> = {
+    name: input.name || `${input.make} ${input.model}`,
+    make: input.make,
+    model: input.model,
+    year: input.year,
+    category: input.category,
+    package: input.package,
+    daily_rate: input.dailyRate,
+    seats: input.seats,
+    transmission: input.transmission,
+  }
+
+  if (image instanceof File) {
+    patch.image_url = await uploadVehicleImage(image)
+  } else if (typeof image === 'string' && image) {
+    patch.image_url = image
+  }
+
+  const { data, error } = await supabase
+    .from('vehicles')
+    .update(patch)
+    .eq('id', id)
+    .select('*')
+    .single()
+
+  if (error) throw error
+
+  const { data: unavailable, error: unavailableError } = await supabase
+    .from('vehicle_unavailable_dates')
+    .select('unavailable_date')
+    .eq('vehicle_id', id)
+
+  if (unavailableError) throw unavailableError
+
+  const dates = (unavailable ?? []).map((row) => row.unavailable_date as string)
+  return mapVehicle(data as VehicleRow, dates)
+}
+
 export async function toggleDateUnavailable(id: string, date: string): Promise<void> {
   const supabase = getSupabase()
 
@@ -148,14 +193,19 @@ export async function toggleDateUnavailable(id: string, date: string): Promise<v
 export async function seedDemoFleet(): Promise<number> {
   const supabase = getSupabase()
 
-  const { count, error: countError } = await supabase
-    .from('vehicles')
-    .select('*', { count: 'exact', head: true })
+  const { error: clearDatesError } = await supabase
+    .from('vehicle_unavailable_dates')
+    .delete()
+    .neq('id', '00000000-0000-0000-0000-000000000000')
 
-  if (countError) throw countError
-  if ((count ?? 0) > 0) {
-    throw new Error('Fleet already has vehicles. Delete them first or add cars one at a time.')
-  }
+  if (clearDatesError) throw clearDatesError
+
+  const { error: clearVehiclesError } = await supabase
+    .from('vehicles')
+    .delete()
+    .neq('id', '00000000-0000-0000-0000-000000000000')
+
+  if (clearVehiclesError) throw clearVehiclesError
 
   const rows = DEMO_SEED_VEHICLES.map((v) => ({
     name: v.name || `${v.make} ${v.model}`,

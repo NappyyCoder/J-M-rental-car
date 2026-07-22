@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { VehicleCategory } from '../types'
 import { vehicleFallback } from '../lib/assets'
 
@@ -18,17 +18,22 @@ export function SafeImage({
   fallbackSrc,
 }: Props) {
   const fallback = fallbackSrc ?? vehicleFallback(fallbackCategory)
-  const [activeSrc, setActiveSrc] = useState(src?.trim() || fallback)
+  const resolved = src?.trim() || fallback
+  const [useFallback, setUseFallback] = useState(false)
+
+  useEffect(() => {
+    setUseFallback(false)
+  }, [resolved])
 
   return (
     <img
       className={className}
-      src={activeSrc}
+      src={useFallback ? fallback : resolved}
       alt={alt}
       loading="lazy"
       decoding="async"
       onError={() => {
-        if (activeSrc !== fallback) setActiveSrc(fallback)
+        if (!useFallback) setUseFallback(true)
       }}
     />
   )
