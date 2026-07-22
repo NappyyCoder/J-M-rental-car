@@ -23,7 +23,7 @@ export function Logo({ className = '', variant = 'header' }: Props) {
         fontWeight="700"
         fill="currentColor"
       >
-        J&amp;M
+        J&M
       </text>
       <text
         x="140"

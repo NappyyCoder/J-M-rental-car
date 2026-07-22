@@ -1,6 +1,9 @@
 export const PHONE_DISPLAY = '(703) 563 1125'
 export const PHONE_TEL = '+17035631125'
 
+export const SITE_NAME = 'J&M Car Rental LLC'
+export const SITE_NAME_SHORT = 'J&M Car Rental'
+
 export const ADDRESS_LINE1 = '3692 S Plaza Trail #10'
 export const ADDRESS_LINE2 = 'Virginia Beach, VA 23452'
 export const ADDRESS_FULL = `${ADDRESS_LINE1}, ${ADDRESS_LINE2}`

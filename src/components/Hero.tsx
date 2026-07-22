@@ -7,8 +7,7 @@ export function Hero() {
         <div className="hero-overlay" />
       </div>
       <div className="container hero-content">
-        <p className="label hero-in">J&amp;M Car Rental LLC</p>
-        <p className="hero-tagline hero-in">{VETERAN_OWNED_LABEL}</p>
+        <p className="label hero-in">{VETERAN_OWNED_LABEL}</p>
         <h1 className="hero-in">Car rentals in Virginia Beach</h1>
         <p className="hero-lead hero-in">
           Everyday cars for work, errands, and travel. Call us to book. {WEEKLY_RATES_NOTE}
