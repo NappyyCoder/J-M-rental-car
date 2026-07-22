@@ -12,9 +12,12 @@ import { DEMO_VEHICLES } from '../lib/demoVehicles'
 import { isSupabaseConfigured } from '../lib/supabase'
 import {
   addVehicle as addVehicleApi,
+  blockDates as blockDatesApi,
   fetchVehicles,
   removeVehicle as removeVehicleApi,
+  seedDemoFleet as seedDemoFleetApi,
   toggleDateUnavailable as toggleDateApi,
+  unblockDates as unblockDatesApi,
 } from '../lib/vehicles'
 
 type FleetContextValue = {
@@ -27,9 +30,12 @@ type FleetContextValue = {
   error: string | null
   configured: boolean
   refresh: () => Promise<void>
-  add: (input: VehicleInput, imageFile: File) => Promise<Vehicle>
+  add: (input: VehicleInput, image: File | string) => Promise<Vehicle>
   remove: (id: string) => Promise<void>
   toggleUnavailable: (id: string, date: string) => Promise<void>
+  blockDates: (id: string, dates: string[]) => Promise<void>
+  unblockDates: (id: string, dates: string[]) => Promise<void>
+  seedDemo: () => Promise<number>
 }
 
 const FleetContext = createContext<FleetContextValue | null>(null)
@@ -73,8 +79,8 @@ export function FleetProvider({ children }: { children: ReactNode }) {
       error,
       configured,
       refresh,
-      add: async (input, imageFile) => {
-        const vehicle = await addVehicleApi(input, imageFile)
+      add: async (input, image) => {
+        const vehicle = await addVehicleApi(input, image)
         await refresh()
         return vehicle
       },
@@ -85,6 +91,19 @@ export function FleetProvider({ children }: { children: ReactNode }) {
       toggleUnavailable: async (id, date) => {
         await toggleDateApi(id, date)
         await refresh()
+      },
+      blockDates: async (id, dates) => {
+        await blockDatesApi(id, dates)
+        await refresh()
+      },
+      unblockDates: async (id, dates) => {
+        await unblockDatesApi(id, dates)
+        await refresh()
+      },
+      seedDemo: async () => {
+        const count = await seedDemoFleetApi()
+        await refresh()
+        return count
       },
     }),
     [vehicles, dbVehicles, isDemoFleet, loading, error, configured, refresh],

@@ -1,4 +1,5 @@
 import type { Vehicle, VehicleCategory, VehicleInput, VehiclePackage } from '../types'
+import { DEMO_SEED_VEHICLES } from './demoFleetSeed'
 import { getSupabase } from './supabase'
 
 type VehicleRow = {
@@ -84,9 +85,12 @@ export async function uploadVehicleImage(file: File): Promise<string> {
   return data.publicUrl
 }
 
-export async function addVehicle(input: VehicleInput, imageFile: File): Promise<Vehicle> {
+export async function addVehicle(
+  input: VehicleInput,
+  image: File | string,
+): Promise<Vehicle> {
   const supabase = getSupabase()
-  const imageUrl = await uploadVehicleImage(imageFile)
+  const imageUrl = typeof image === 'string' ? image : await uploadVehicleImage(image)
 
   const { data, error } = await supabase
     .from('vehicles')
@@ -137,6 +141,73 @@ export async function toggleDateUnavailable(id: string, date: string): Promise<v
     vehicle_id: id,
     unavailable_date: date,
   })
+
+  if (error) throw error
+}
+
+export async function seedDemoFleet(): Promise<number> {
+  const supabase = getSupabase()
+
+  const { count, error: countError } = await supabase
+    .from('vehicles')
+    .select('*', { count: 'exact', head: true })
+
+  if (countError) throw countError
+  if ((count ?? 0) > 0) {
+    throw new Error('Fleet already has vehicles. Delete them first or add cars one at a time.')
+  }
+
+  const rows = DEMO_SEED_VEHICLES.map((v) => ({
+    name: v.name || `${v.make} ${v.model}`,
+    make: v.make,
+    model: v.model,
+    year: v.year,
+    category: v.category,
+    package: v.package,
+    daily_rate: v.dailyRate,
+    seats: v.seats,
+    transmission: v.transmission,
+    image_url: v.imageUrl,
+  }))
+
+  const { error } = await supabase.from('vehicles').insert(rows)
+  if (error) throw error
+  return rows.length
+}
+
+export async function blockDates(vehicleId: string, dates: string[]): Promise<void> {
+  const supabase = getSupabase()
+  const unique = [...new Set(dates)].filter(Boolean)
+  if (unique.length === 0) return
+
+  const { data: existing, error: readError } = await supabase
+    .from('vehicle_unavailable_dates')
+    .select('unavailable_date')
+    .eq('vehicle_id', vehicleId)
+    .in('unavailable_date', unique)
+
+  if (readError) throw readError
+
+  const have = new Set((existing ?? []).map((row) => row.unavailable_date as string))
+  const toAdd = unique.filter((d) => !have.has(d))
+  if (toAdd.length === 0) return
+
+  const { error } = await supabase.from('vehicle_unavailable_dates').insert(
+    toAdd.map((unavailable_date) => ({ vehicle_id: vehicleId, unavailable_date })),
+  )
+  if (error) throw error
+}
+
+export async function unblockDates(vehicleId: string, dates: string[]): Promise<void> {
+  const supabase = getSupabase()
+  const unique = [...new Set(dates)].filter(Boolean)
+  if (unique.length === 0) return
+
+  const { error } = await supabase
+    .from('vehicle_unavailable_dates')
+    .delete()
+    .eq('vehicle_id', vehicleId)
+    .in('unavailable_date', unique)
 
   if (error) throw error
 }
@@ -206,4 +277,21 @@ export async function getSession() {
   const supabase = getSupabase()
   const { data } = await supabase.auth.getSession()
   return data.session
+}
+
+/** Returns setup instructions when the DB schema is incomplete. */
+export async function getFleetSchemaIssue(): Promise<string | null> {
+  const supabase = getSupabase()
+  const { error } = await supabase.from('vehicles').select('package').limit(1)
+
+  if (!error) return null
+
+  const message = error.message?.toLowerCase() ?? ''
+  if (message.includes('package')) {
+    return 'Run supabase/migration-add-package.sql in Supabase → SQL Editor, then refresh this page.'
+  }
+  if (message.includes('relation') || message.includes('does not exist')) {
+    return 'Run supabase/schema.sql in Supabase → SQL Editor to create the database tables.'
+  }
+  return null
 }
