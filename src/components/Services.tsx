@@ -36,7 +36,7 @@ export function Services({ showIntro = true, variant = 'default' }: Props) {
           <>
             <div className="services-panel">
               <div className="services-panel-head">
-                <h2>What we offer</h2>
+                <h2>Rentals and add-ons</h2>
                 <p>Day rentals with clear pricing and simple rules. No hidden fees.</p>
               </div>
               <div className="services-grid services-grid--page">
