@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { HOME_GOLD_PACKAGE_IMAGE, HOME_SILVER_PACKAGE_IMAGE } from '../lib/assets'
-import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, PHONE_TEL, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
+import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
 import { PACKAGE_INFO, PACKAGE_ORDER } from '../lib/packages'
 import { SafeImage } from './SafeImage'
 
@@ -72,9 +72,6 @@ export function RentalProcess({ variant = 'default' }: Props) {
               </Link>
               <a className="btn btn-outline" href="#available-cars">
                 Browse cars
-              </a>
-              <a className="btn btn-outline" href={`tel:${PHONE_TEL}`}>
-                Call {PHONE_DISPLAY}
               </a>
             </div>
           </div>
