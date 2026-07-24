@@ -8,7 +8,7 @@ export function Hero() {
         <div className="hero-overlay" />
       </div>
 
-      <div className="container hero-content">
+      <div className="container hero-inner">
         <span className="hero-badge hero-in">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path

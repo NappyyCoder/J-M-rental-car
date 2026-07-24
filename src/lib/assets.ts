@@ -10,6 +10,9 @@ export const HOME_SILVER_PACKAGE_IMAGE = '/images/fleet/chevy-cruze.jpeg'
 
 export const ABOUT_IMAGE_URL = '/images/fleet/vw-cc.jpeg'
 
+/** J&M storefront/building photo shown beside the home hero. Drop the file at public/images/jm-building.jpg */
+export const HOME_HERO_IMAGE = '/images/jm-building.jpg'
+
 export const VEHICLE_FALLBACK_IMAGES: Record<VehicleCategory, string> = {
   economy: '/images/economy.jpg',
   sedan: '/images/sedan.jpg',
