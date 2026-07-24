@@ -4,8 +4,6 @@ export function Hero() {
   return (
     <section className="hero hero--home hero--plain">
       <div className="hero-bg" aria-hidden="true">
-        <span className="hero-glow hero-glow--gold" />
-        <span className="hero-glow hero-glow--soft" />
         <span className="hero-grid" />
         <div className="hero-overlay" />
       </div>
