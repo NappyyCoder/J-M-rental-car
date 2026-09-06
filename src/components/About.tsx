@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ABOUT_IMAGE_URL } from '../lib/assets'
+import { ABOUT_IMAGE_URL, SHOP_IMAGE_URL } from '../lib/assets'
 import { ADDRESS_LINE1, ADDRESS_LINE2, DEPOSIT_RANGE, HOURS, MAPS_DIRECTIONS_URL, PHONE_DISPLAY, PHONE_TEL, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
 import { LocationMap } from './LocationMap'
 import { SafeImage } from './SafeImage'
@@ -101,6 +101,13 @@ export function About() {
 
           <div className="about-info-card">
             <h3>Where to find us</h3>
+            <figure className="shop-photo shop-photo--card">
+              <SafeImage
+                src={SHOP_IMAGE_URL}
+                alt="J and M Car Rental storefront sign on S Plaza Trail"
+              />
+              <figcaption>Our shop on S Plaza Trail</figcaption>
+            </figure>
             <address className="about-address">
               {ADDRESS_LINE1}
               <br />

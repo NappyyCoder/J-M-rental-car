@@ -1,5 +1,5 @@
 :root {
-  /* Brand ink — matches the black J&M logo (charcoal, faint warm undertone) */
+  /* Brand ink. Matches the black J&M logo (charcoal, faint warm undertone) */
   --ink: #1a1917;
   --ink-mid: #2c2a27;
   --ink-light: #45423d;
@@ -12,7 +12,7 @@
   --gold-dark: #855912;
   --gold-soft: #faf4e8;
   --gold-light: #d8b877;
-  /* UI accent — simplified to the ink ramp so the site reads clean and monochrome */
+  /* UI accent. Simplified to the ink ramp so the site reads clean and monochrome */
   --blue: var(--ink);
   --blue-dark: var(--ink-mid);
   --blue-soft: var(--slate-100);
@@ -294,7 +294,7 @@ main {
   border-color: rgba(255, 255, 255, 0.65);
 }
 
-/* used outside hero — light background contexts */
+/* used outside hero, light background contexts */
 .section .btn-secondary,
 .admin-page .btn-secondary,
 .gate .btn-secondary {
@@ -569,6 +569,10 @@ main {
 
 .nav-cta {
   justify-self: end;
+}
+
+.nav-cta-short {
+  display: none;
 }
 
 .nav-toggle {
@@ -896,6 +900,13 @@ main {
   text-align: center;
 }
 
+.home-step-card--plain p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
 .home-step-media {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -960,10 +971,11 @@ main {
 .home-package-photo {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: 50% 62%;
   display: block;
   background: var(--slate-100);
+  filter: contrast(1.07) saturate(1.04);
 }
 
 .home-package-overlay {
@@ -1495,13 +1507,124 @@ main {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 3rem;
-  align-items: center;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 2.5rem;
+  align-items: stretch;
 }
 
 .hero--split .hero-content {
   max-width: 600px;
+  align-self: center;
+}
+
+.hero-visual {
+  position: relative;
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 460px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45);
+}
+
+.hero-visual-media {
+  position: relative;
+}
+
+.hero-visual-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 55% 62%;
+  filter: contrast(1.08) saturate(1.05);
+}
+
+.hero-visual-arrow {
+  position: absolute;
+  top: 42%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(20, 19, 17, 0.72);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.hero-visual-arrow svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.hero-visual-arrow:hover,
+.hero-visual-arrow:focus-visible {
+  background: rgba(20, 19, 17, 0.9);
+}
+
+.hero-visual-arrow--prev {
+  left: 0.65rem;
+}
+
+.hero-visual-arrow--next {
+  right: 0.65rem;
+}
+
+.hero-available {
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  margin: 0;
+  padding: 0.7rem 0.85rem;
+  border-radius: 10px;
+  background: rgba(20, 19, 17, 0.82);
+  color: var(--white);
+  pointer-events: none;
+}
+
+.hero-available-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d8e7c8;
+}
+
+.hero-available-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.2rem;
+}
+
+.hero-available-car {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  line-height: 1.25;
+}
+
+.hero-available-price {
+  flex: none;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.hero-available-price small {
+  margin-left: 0.1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .hero-card {
@@ -1515,6 +1638,28 @@ main {
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%);
   box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(6px);
+}
+
+.hero-visual .hero-card {
+  position: static;
+  max-width: none;
+  justify-self: auto;
+  border-radius: 0;
+  padding: 1.05rem 1.2rem 1.15rem;
+  background: rgba(20, 19, 17, 0.92);
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.hero-visual .hero-card-title {
+  margin-bottom: 0.85rem;
+  font-size: 1.08rem;
+}
+
+.hero-visual .hero-card-list {
+  gap: 0.85rem;
 }
 
 .hero-card-title {
@@ -1627,7 +1772,7 @@ main {
 .hero-badge svg {
   width: 15px;
   height: 15px;
-  color: #ffffff;
+  color: #c4a06a;
   flex-shrink: 0;
   animation: hero-badge-spark 3.5s var(--ease-out) infinite;
 }
@@ -1803,7 +1948,7 @@ main {
   animation-delay: 0.46s;
 }
 
-.hero-inner .hero-card.hero-in {
+.hero-inner .hero-visual.hero-in {
   animation-delay: 0.22s;
 }
 
@@ -1845,8 +1990,36 @@ main {
 .about-media img {
   width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: 50% 58%;
+  filter: contrast(1.06) saturate(1.04);
+}
+
+.shop-photo {
+  margin: 0 0 1rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--slate-50);
+}
+
+.shop-photo img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center 42%;
+  display: block;
+}
+
+.shop-photo figcaption {
+  margin: 0;
+  padding: 0.55rem 0.75rem 0.65rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.shop-photo--card {
+  margin-bottom: 0.95rem;
 }
 
 .about-copy > p + p {
@@ -2463,8 +2636,9 @@ main {
 .vehicle-media img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: 50% 62%;
+  filter: contrast(1.07) saturate(1.04);
   transition: transform 0.55s var(--ease-out);
 }
 
@@ -4440,6 +4614,13 @@ main {
   .brand {
     grid-column: 1;
     grid-row: 1;
+    min-width: 0;
+  }
+
+  .brand-logo {
+    height: 2.25rem;
+    min-width: 0;
+    max-width: 8.2rem;
   }
 
   .nav-cta {
@@ -4447,8 +4628,16 @@ main {
     grid-column: 2;
     grid-row: 1;
     justify-self: end;
-    padding: 0.4rem 0.55rem;
-    font-size: 0.72rem;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.78rem;
+  }
+
+  .nav-cta-full {
+    display: none;
+  }
+
+  .nav-cta-short {
+    display: inline;
   }
 
   .nav-toggle {
@@ -4665,14 +4854,43 @@ main {
     gap: 1.5rem;
   }
 
+  .hero-visual {
+    justify-self: stretch;
+    max-width: none;
+  }
+
+  .hero-visual-arrow {
+    top: 34%;
+  }
+
+  .hero-visual-arrow--prev {
+    left: 0.5rem;
+  }
+
+  .hero-visual-arrow--next {
+    right: 0.5rem;
+  }
+
+  .hero-available-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
+
+  .hero-visual .hero-card,
   .hero-card {
     justify-self: stretch;
     max-width: none;
-    padding: 1.4rem;
+    padding: 1.2rem 1.15rem 1.3rem;
   }
 
   .hero .hero-title {
-    font-size: clamp(1.75rem, 8vw, 2.35rem);
+    font-size: clamp(1.65rem, 7.2vw, 2.15rem);
+    text-wrap: wrap;
+  }
+
+  .hero .hero-title .hero-title-accent {
+    display: block;
   }
 
   .hero-badge {
@@ -4866,4 +5084,260 @@ main {
   .package-card:hover {
     transform: none;
   }
+}
+
+/* Hidden e-sign demo (/sign), not linked in main nav */
+.sign-page {
+  padding: calc(var(--nav-h) + 1.75rem) 0 3rem;
+  min-height: calc(100vh - var(--nav-h));
+  background: var(--bg-alt);
+}
+
+.sign-shell {
+  max-width: 720px;
+}
+
+.sign-shell-wide {
+  max-width: 960px;
+}
+
+.sign-page h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: 0.65rem;
+}
+
+.sign-lead {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  max-width: 36rem;
+}
+
+.sign-hub-grid {
+  display: grid;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (min-width: 720px) {
+  .sign-hub-grid {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.sign-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.35rem 1.4rem;
+}
+
+.sign-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.65rem;
+}
+
+.sign-card > p,
+.sign-hint {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.85rem;
+}
+
+.sign-card ul {
+  margin: 0 0 1rem;
+  padding-left: 1.1rem;
+  color: var(--slate-700);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.sign-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.sign-body {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--slate-700);
+}
+
+.sign-fields {
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .sign-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sign-fields .field span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.sign-fields .field input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--slate-50);
+  font-size: 1rem;
+}
+
+.sign-fields .field input:focus {
+  outline: none;
+  background: var(--white);
+  border-color: var(--ink-light);
+  box-shadow: 0 0 0 3px rgba(26, 25, 23, 0.08);
+}
+
+.sign-pad {
+  margin-bottom: 0.85rem;
+}
+
+.sign-pad-frame {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.sign-pad-canvas {
+  display: block;
+  width: 100%;
+  height: 160px;
+}
+
+.sign-pad .text-link {
+  margin-top: 0.5rem;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.sign-agree {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-size: 0.92rem;
+  color: var(--slate-700);
+  line-height: 1.5;
+}
+
+.sign-agree input {
+  margin-top: 0.2rem;
+  accent-color: var(--ink);
+}
+
+.sign-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.sign-error {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius);
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: var(--red);
+  font-size: 0.9rem;
+}
+
+.sign-qr {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.sign-qr p {
+  margin: 0;
+  max-width: 12rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.sign-qr span {
+  display: block;
+  margin-top: 0.35rem;
+  word-break: break-all;
+  font-size: 0.65rem;
+  color: var(--slate-400);
+}
+
+.sign-table-wrap {
+  overflow-x: auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.sign-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.sign-table th,
+.sign-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: top;
+}
+
+.sign-table th {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--slate-500);
+  background: var(--slate-50);
+}
+
+.sign-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.sign-table .muted {
+  font-size: 0.75rem;
+  color: var(--slate-400);
+}
+
+.sign-table .text-link {
+  margin: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sign-empty {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.sign-empty a {
+  color: var(--ink);
+  font-weight: 600;
 }

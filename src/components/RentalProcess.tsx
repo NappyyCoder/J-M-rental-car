@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 import { HOME_GOLD_PACKAGE_IMAGE, HOME_SILVER_PACKAGE_IMAGE } from '../lib/assets'
-import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
+import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, VETERAN_OWNED_LABEL } from '../lib/contact'
 import { PACKAGE_INFO, PACKAGE_ORDER } from '../lib/packages'
 import { SafeImage } from './SafeImage'
 
 const steps = [
-  { step: '1', title: 'Pick your date' },
-  { step: '2', title: 'Call to book' },
-  { step: '3', title: 'Pick up' },
+  { step: '1', title: 'Pick your date', text: 'See which cars are open for the day you need.' },
+  { step: '2', title: 'Call to book', text: 'We hold the car during business hours.' },
+  { step: '3', title: 'Pick up', text: 'Bring your license and a debit or credit card.' },
 ]
 
 const trustItems = [
@@ -45,27 +45,6 @@ export function RentalProcess({ variant = 'default' }: Props) {
               everyday driving and short trips. Browse what is open below, then call us to hold your car.
             </p>
 
-            <ul className="home-intro-highlights">
-              <li>
-                <strong>Gold &amp; Silver</strong>
-                <span>Nicer or everyday local cars</span>
-              </li>
-              <li>
-                <strong>Weekly rates</strong>
-                <span>{WEEKLY_RATES_NOTE}</span>
-              </li>
-              <li>
-                <strong>25+ to rent</strong>
-                <span>{DEPOSIT_RANGE} deposit at pickup</span>
-              </li>
-              <li>
-                <strong>Mon through Sat</strong>
-                <span>
-                  {HOURS.weekdays.time}. Sat {HOURS.saturday.time}.
-                </span>
-              </li>
-            </ul>
-
             <div className="home-intro-actions">
               <Link className="btn btn-primary home-intro-cta" to="/about">
                 Read our story
@@ -82,6 +61,7 @@ export function RentalProcess({ variant = 'default' }: Props) {
               <article key={item.step} className="home-step-card home-step-card--plain">
                 <span className="home-step-badge home-step-badge--plain">{item.step}</span>
                 <h3>{item.title}</h3>
+                <p>{item.text}</p>
               </article>
             ))}
           </div>
@@ -107,21 +87,6 @@ export function RentalProcess({ variant = 'default' }: Props) {
                   <p>{pkg === 'gold' ? 'Nicer local cars' : 'Everyday cars'}</p>
                 </div>
               </Link>
-            ))}
-          </div>
-
-          <div className="trust-bar-inline trust-bar-inline--home" aria-label="Rental highlights">
-            {trustItems.map((item) => (
-              <div key={item.label} className="trust-item">
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
-                {'details' in item &&
-                  item.details.map((line) => (
-                    <span key={line} className="trust-item-detail">
-                      {line}
-                    </span>
-                  ))}
-              </div>
             ))}
           </div>
         </div>

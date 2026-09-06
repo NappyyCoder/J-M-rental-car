@@ -15,7 +15,7 @@ export type DemoSeedVehicle = {
 
 const fleet = (file: string) => `/images/fleet/${file}`
 
-/** J&M fleet — photos in public/images/fleet/ (from client zip). */
+/** J&M fleet. Photos in public/images/fleet/ (from client zip). */
 export const DEMO_SEED_VEHICLES: DemoSeedVehicle[] = [
   {
     name: '',

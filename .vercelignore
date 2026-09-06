@@ -1,0 +1,13 @@
+car-images/
+IMG_0776.HEIC
+.git/
+node_modules/
+dist/
+.env
+.env.*
+.env-jimmy
+.DS_Store
+*.log
+docs/
+scripts/
+supabase/

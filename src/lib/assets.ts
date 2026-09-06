@@ -1,17 +1,19 @@
 import type { VehicleCategory } from '../types'
 
-/** Bundled images — always available, no external CDN dependency */
-/** Home hero uses CSS gradient only — stock hero.jpg is luxury dealership imagery. */
+/** Bundled images, always available, no external CDN dependency */
+/** Home hero uses CSS gradient only. Stock hero.jpg is luxury dealership imagery. */
 export const HERO_IMAGE_URL = '/images/hero.jpg'
 
 /** Real J&M fleet photos for marketing (not stock luxury cars). */
 export const HOME_GOLD_PACKAGE_IMAGE = '/images/fleet/audi-a8.jpeg'
 export const HOME_SILVER_PACKAGE_IMAGE = '/images/fleet/chevy-cruze.jpeg'
+export const HOME_HERO_CAR_IMAGE = '/images/fleet/chevy-cruze.jpeg'
 
 export const ABOUT_IMAGE_URL = '/images/fleet/vw-cc.jpeg'
 
-/** J&M storefront/building photo shown beside the home hero. Drop the file at public/images/jm-building.jpg */
-export const HOME_HERO_IMAGE = '/images/jm-building.jpg'
+/** J&M storefront sign on the brick shop wall. */
+export const SHOP_IMAGE_URL = '/images/jm-building.jpg'
+export const HOME_HERO_IMAGE = SHOP_IMAGE_URL
 
 export const VEHICLE_FALLBACK_IMAGES: Record<VehicleCategory, string> = {
   economy: '/images/economy.jpg',

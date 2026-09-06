@@ -23,7 +23,7 @@ export function ComingSoonPage() {
         <p className="coming-soon-label">{VETERAN_OWNED_LABEL} · Virginia Beach, VA</p>
         <h1>Our new website is on the way</h1>
         <p className="coming-soon-lead">
-          J&amp;M Car Rental is getting a fresh look online. Rentals are still available — call us
+          J&amp;M Car Rental is getting a fresh look online. Rentals are still available. Call us
           during business hours to book. {WEEKLY_RATES_NOTE}
         </p>
         <a className="btn btn-primary btn-lg coming-soon-call" href={`tel:${PHONE_TEL}`}>

@@ -8,6 +8,7 @@ type Props = {
   className?: string
   fallbackCategory?: VehicleCategory
   fallbackSrc?: string
+  priority?: boolean
 }
 
 export function SafeImage({
@@ -16,6 +17,7 @@ export function SafeImage({
   className,
   fallbackCategory,
   fallbackSrc,
+  priority = false,
 }: Props) {
   const fallback = fallbackSrc ?? vehicleFallback(fallbackCategory)
   const resolved = src?.trim() || fallback
@@ -30,7 +32,8 @@ export function SafeImage({
       className={className}
       src={useFallback ? fallback : resolved}
       alt={alt}
-      loading="lazy"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
       decoding="async"
       onError={() => {
         if (!useFallback) setUseFallback(true)

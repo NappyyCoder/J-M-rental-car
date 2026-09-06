@@ -138,7 +138,8 @@ export function Header() {
         </nav>
 
         <a className="btn btn-primary btn-sm nav-cta" href={`tel:${PHONE_TEL}`}>
-          {PHONE_DISPLAY}
+          <span className="nav-cta-full">{PHONE_DISPLAY}</span>
+          <span className="nav-cta-short" aria-hidden="true">Call</span>
         </a>
       </div>
     </header>

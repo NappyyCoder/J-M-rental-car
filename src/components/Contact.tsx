@@ -1,3 +1,4 @@
+import { SHOP_IMAGE_URL } from '../lib/assets'
 import {
   ADDRESS_LINE1,
   ADDRESS_LINE2,
@@ -8,6 +9,7 @@ import {
   PHONE_TEL,
 } from '../lib/contact'
 import { LocationMap } from './LocationMap'
+import { SafeImage } from './SafeImage'
 
 export function Contact() {
   return (
@@ -24,6 +26,13 @@ export function Contact() {
           <p className="contact-phone">
             <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
           </p>
+          <figure className="shop-photo">
+            <SafeImage
+              src={SHOP_IMAGE_URL}
+              alt="J and M Car Rental storefront sign on S Plaza Trail"
+            />
+            <figcaption>Our shop on S Plaza Trail</figcaption>
+          </figure>
           <div className="location-map-block">
             <LocationMap />
             <a

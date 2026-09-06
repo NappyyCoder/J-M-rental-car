@@ -17,5 +17,12 @@ node_modules/.vite/
 *.log
 .DS_Store
 
+# Local media / scratch (not for deploy)
+car-images/
+IMG_0776.HEIC
+.env-jimmy
+
 # TypeScript
 *.tsbuildinfo
+.vercel
+.env*
