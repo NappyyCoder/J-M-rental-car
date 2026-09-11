@@ -19,6 +19,7 @@ export function Logo({ className = '', variant = 'header' }: Props) {
         y="45"
         textAnchor="middle"
         className="brand-logo-mark"
+        fontFamily="Inter, system-ui, sans-serif"
         fontSize="48"
         fontWeight="700"
         fill="currentColor"
@@ -30,10 +31,10 @@ export function Logo({ className = '', variant = 'header' }: Props) {
         y="68"
         textAnchor="middle"
         className="brand-logo-sub"
-        fontSize="16.5"
-        fontWeight="700"
-        fontStyle="italic"
-        letterSpacing="0.16em"
+        fontFamily="Inter, system-ui, sans-serif"
+        fontSize="15"
+        fontWeight="600"
+        letterSpacing="0.12em"
         fill="currentColor"
       >
         CAR RENTAL

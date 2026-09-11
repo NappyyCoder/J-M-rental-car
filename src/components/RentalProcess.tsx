@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 import { HOME_GOLD_PACKAGE_IMAGE, HOME_SILVER_PACKAGE_IMAGE } from '../lib/assets'
-import { DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, VETERAN_OWNED_LABEL } from '../lib/contact'
+import { ADDRESS_LINE1, DEPOSIT_RANGE, HOURS, PHONE_DISPLAY, VETERAN_OWNED_LABEL } from '../lib/contact'
 import { PACKAGE_INFO, PACKAGE_ORDER } from '../lib/packages'
 import { SafeImage } from './SafeImage'
 
 const steps = [
   { step: '1', title: 'Pick your date', text: 'See which cars are open for the day you need.' },
   { step: '2', title: 'Call to book', text: 'We hold the car during business hours.' },
-  { step: '3', title: 'Pick up', text: 'Bring your license and a debit or credit card.' },
+  { step: '3', title: 'Pick up', text: `Bring your license and a debit or credit card to ${ADDRESS_LINE1}.` },
 ]
 
 const trustItems = [
@@ -108,7 +108,7 @@ export function RentalProcess({ variant = 'default' }: Props) {
     {
       step: '3',
       title: 'Pick up',
-      text: `Bring your license and a debit or credit card. Deposits are usually ${DEPOSIT_RANGE}.`,
+      text: `Bring your license and a debit or credit card to ${ADDRESS_LINE1}. Deposits are usually ${DEPOSIT_RANGE}.`,
     },
   ]
 

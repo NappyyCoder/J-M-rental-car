@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { PHONE_DISPLAY, PHONE_TEL, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
+import { ADDRESS_LINE1, ADDRESS_LINE2, MAPS_DIRECTIONS_URL, PHONE_DISPLAY, PHONE_TEL, VETERAN_OWNED_LABEL, WEEKLY_RATES_NOTE } from '../lib/contact'
 import { Logo } from './Logo'
 
 export function Footer() {
@@ -10,13 +10,17 @@ export function Footer() {
           <Link to="/" className="footer-brand-link">
             <Logo variant="footer" className="brand-logo--footer" />
           </Link>
-          <p>Virginia Beach, VA</p>
           <p className="footer-tagline">{VETERAN_OWNED_LABEL}</p>
-          <p className="footer-address">
-            3692 S Plaza Trail #10
+          <a
+            className="footer-address"
+            href={MAPS_DIRECTIONS_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {ADDRESS_LINE1}
             <br />
-            Virginia Beach, VA 23452
-          </p>
+            {ADDRESS_LINE2}
+          </a>
         </div>
         <nav className="footer-nav" aria-label="Footer">
           <Link to="/">Home</Link>

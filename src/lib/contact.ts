@@ -4,15 +4,15 @@ export const PHONE_TEL = '+17035631125'
 export const SITE_NAME = 'J&M Car Rental LLC'
 export const SITE_NAME_SHORT = 'J&M Car Rental'
 
-export const ADDRESS_LINE1 = '3692 S Plaza Trail #10'
-export const ADDRESS_LINE2 = 'Virginia Beach, VA 23452'
+export const ADDRESS_LINE1 = '202 S Newtown Road'
+export const ADDRESS_LINE2 = 'Virginia Beach, VA 23462'
 export const ADDRESS_FULL = `${ADDRESS_LINE1}, ${ADDRESS_LINE2}`
 
 export const MAPS_DIRECTIONS_URL =
-  'https://www.google.com/maps/search/?api=1&query=3692+S+Plaza+Trail+%2310+Virginia+Beach+VA+23452'
+  'https://www.google.com/maps/search/?api=1&query=202+S+Newtown+Road+Virginia+Beach+VA+23462'
 
 export const MAPS_EMBED_URL =
-  'https://www.google.com/maps?q=3692+S+Plaza+Trail+%2310,+Virginia+Beach,+VA+23452&output=embed'
+  'https://www.google.com/maps?q=202+S+Newtown+Road,+Virginia+Beach,+VA+23462&output=embed'
 
 export const HOURS = {
   weekdays: { label: 'Monday through Friday', time: '9:30 AM to 5:30 PM' },

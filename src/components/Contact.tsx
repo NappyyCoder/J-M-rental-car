@@ -14,37 +14,27 @@ import { SafeImage } from './SafeImage'
 export function Contact() {
   return (
     <section className="section contact" id="contact">
-      <div className="container contact-grid">
-        <div>
+      <div className="container contact-layout">
+        <div className="contact-place">
           <p className="label">Location</p>
           <h2>Come see us</h2>
-          <address>
-            {ADDRESS_LINE1}
-            <br />
+          <address className="place-address">
+            <strong>{ADDRESS_LINE1}</strong>
             {ADDRESS_LINE2}
           </address>
           <p className="contact-phone">
             <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
           </p>
-          <figure className="shop-photo">
-            <SafeImage
-              src={SHOP_IMAGE_URL}
-              alt="J and M Car Rental storefront sign on S Plaza Trail"
-            />
-            <figcaption>Our shop on S Plaza Trail</figcaption>
-          </figure>
-          <div className="location-map-block">
-            <LocationMap />
-            <a
-              className="text-link text-link--arrow location-map-link"
-              href={MAPS_DIRECTIONS_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Get directions in Google Maps
-            </a>
-          </div>
+          <a
+            className="text-link text-link--arrow"
+            href={MAPS_DIRECTIONS_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Get directions in Google Maps
+          </a>
         </div>
+
         <div className="hours-card">
           <h3>Hours</h3>
           <dl>
@@ -70,6 +60,19 @@ export function Contact() {
               <li>Deposit usually {DEPOSIT_RANGE}</li>
             </ul>
           </div>
+        </div>
+
+        <div className="contact-media">
+          <div className="location-map-block">
+            <LocationMap />
+          </div>
+          <figure className="shop-photo shop-photo--side">
+            <SafeImage
+              src={SHOP_IMAGE_URL}
+              alt="J and M Car Rental shop in Virginia Beach"
+            />
+            <figcaption>Pickup at our Virginia Beach shop</figcaption>
+          </figure>
         </div>
       </div>
     </section>

@@ -101,21 +101,20 @@ export function About() {
 
           <div className="about-info-card">
             <h3>Where to find us</h3>
-            <figure className="shop-photo shop-photo--card">
-              <SafeImage
-                src={SHOP_IMAGE_URL}
-                alt="J and M Car Rental storefront sign on S Plaza Trail"
-              />
-              <figcaption>Our shop on S Plaza Trail</figcaption>
-            </figure>
-            <address className="about-address">
-              {ADDRESS_LINE1}
-              <br />
+            <address className="place-address">
+              <strong>{ADDRESS_LINE1}</strong>
               {ADDRESS_LINE2}
             </address>
             <p className="about-phone">
               <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
             </p>
+            <figure className="shop-photo shop-photo--card">
+              <SafeImage
+                src={SHOP_IMAGE_URL}
+                alt="J and M Car Rental shop in Virginia Beach"
+              />
+              <figcaption>Pickup at our Virginia Beach shop</figcaption>
+            </figure>
             <dl className="about-hours">
               <div>
                 <dt>{HOURS.weekdays.label}</dt>

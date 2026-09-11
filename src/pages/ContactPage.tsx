@@ -2,7 +2,7 @@ import { CtaBand } from '../components/CtaBand'
 import { Contact } from '../components/Contact'
 import { PageHero } from '../components/PageHero'
 import { PageLayout } from '../components/PageLayout'
-import { ADDRESS_LINE1, HOURS } from '../lib/contact'
+import { ADDRESS_FULL, HOURS } from '../lib/contact'
 
 export function ContactPage() {
   return (
@@ -10,7 +10,7 @@ export function ContactPage() {
       <PageHero
         label="Contact"
         title="Visit or call us"
-        lead={`${ADDRESS_LINE1}, Virginia Beach. ${HOURS.weekdays.label} ${HOURS.weekdays.time.toLowerCase()}. ${HOURS.saturday.label} ${HOURS.saturday.time.toLowerCase()}.`}
+        lead={`${ADDRESS_FULL}. ${HOURS.weekdays.label} ${HOURS.weekdays.time.toLowerCase()}. ${HOURS.saturday.label} ${HOURS.saturday.time.toLowerCase()}.`}
       />
       <Contact />
       <CtaBand

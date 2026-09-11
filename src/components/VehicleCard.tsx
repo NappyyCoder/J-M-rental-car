@@ -34,13 +34,15 @@ export function VehicleCard({ vehicle, date, index = 0 }: Props) {
           alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
           fallbackCategory={vehicle.category}
         />
-        <span className={`package-badge package-badge--${vehicle.package}`}>
-          {packageLabel(vehicle.package)}
-        </span>
-        {!available && <span className="vehicle-tag booked">Booked</span>}
       </div>
       <div className="vehicle-body">
-        <p className="vehicle-series">{categoryLabel[vehicle.category]}</p>
+        <div className="vehicle-meta">
+          <p className="vehicle-series">{categoryLabel[vehicle.category]}</p>
+          <span className={`package-badge package-badge--${vehicle.package}`}>
+            {packageLabel(vehicle.package)}
+          </span>
+          {!available && <span className="vehicle-tag booked">Booked</span>}
+        </div>
         <h3>
           {vehicle.year} {vehicle.make} {vehicle.model}
         </h3>

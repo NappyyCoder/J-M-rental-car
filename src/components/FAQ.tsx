@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { DEPOSIT_RANGE, PHONE_DISPLAY, WEEKLY_RATES_NOTE } from '../lib/contact'
+import { ADDRESS_FULL, DEPOSIT_RANGE, PHONE_DISPLAY, WEEKLY_RATES_NOTE } from '../lib/contact'
 
 type Props = {
   showIntro?: boolean
@@ -30,6 +30,11 @@ const faqs = [
   {
     q: 'What are your hours?',
     a: 'Monday through Friday, 9:30 AM to 5:30 PM. Saturday, 10:00 AM to 2:00 PM. We are closed on Sunday.',
+  },
+  {
+    q: 'Where are you located?',
+    a: `Pickup is at ${ADDRESS_FULL}. Come in during business hours after you call to reserve.`,
+    link: { to: '/contact', label: 'See the map and hours' },
   },
   {
     q: 'How do I book a car?',

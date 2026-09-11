@@ -76,7 +76,7 @@ export function Services({ showIntro = true, variant = 'default' }: Props) {
             <div className="services-grid">
               {[...services, {
                 title: 'Pick up in Virginia Beach',
-                text: `${ADDRESS_LINE1}. Open Monday through Friday 9:30 to 5:30, Saturday 10 to 2.`,
+                text: `${ADDRESS_LINE1}, ${ADDRESS_LINE2}. Open Monday through Friday 9:30 to 5:30, Saturday 10 to 2.`,
               }].map((s) => (
                 <article key={s.title} className="service-card">
                   <h3>{s.title}</h3>

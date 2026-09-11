@@ -128,33 +128,35 @@ export function Hero() {
               fallbackCategory={availableCar?.category ?? 'economy'}
               priority
             />
-            {canCycle && (
-              <>
-                <button type="button" className="hero-visual-arrow hero-visual-arrow--prev" onClick={showPrev} aria-label="Previous available car">
-                  <Chevron dir="prev" />
-                </button>
-                <button type="button" className="hero-visual-arrow hero-visual-arrow--next" onClick={showNext} aria-label="Next available car">
-                  <Chevron dir="next" />
-                </button>
-              </>
-            )}
             {availableCar && (
-              <p className="hero-available">
-                <span className="hero-available-label">
-                  Available now
-                  {startingPrice != null && ` · from $${startingPrice}/day`}
-                  {canCycle && ` · ${index + 1} of ${availableCars.length}`}
-                </span>
-                <span className="hero-available-row">
-                  <span className="hero-available-car">
-                    {availableCar.year} {availableCar.make} {availableCar.model}
+              <div className="hero-available">
+                {canCycle && (
+                  <button type="button" className="hero-visual-arrow hero-visual-arrow--prev" onClick={showPrev} aria-label="Previous available car">
+                    <Chevron dir="prev" />
+                  </button>
+                )}
+                <p className="hero-available-copy">
+                  <span className="hero-available-label">
+                    Available now
+                    {startingPrice != null && ` · from $${startingPrice}/day`}
+                    {canCycle && ` · ${index + 1} of ${availableCars.length}`}
                   </span>
-                  <span className="hero-available-price">
-                    ${availableCar.dailyRate}
-                    <small>/day</small>
+                  <span className="hero-available-row">
+                    <span className="hero-available-car">
+                      {availableCar.year} {availableCar.make} {availableCar.model}
+                    </span>
+                    <span className="hero-available-price">
+                      ${availableCar.dailyRate}
+                      <small>/day</small>
+                    </span>
                   </span>
-                </span>
-              </p>
+                </p>
+                {canCycle && (
+                  <button type="button" className="hero-visual-arrow hero-visual-arrow--next" onClick={showNext} aria-label="Next available car">
+                    <Chevron dir="next" />
+                  </button>
+                )}
+              </div>
             )}
           </div>
           <aside className="hero-card" aria-label="Store details">
@@ -170,9 +172,11 @@ export function Hero() {
                 </span>
                 <span className="hero-card-text">
                   <span className="hero-card-label">Location</span>
-                  {ADDRESS_LINE1}
-                  <br />
-                  {ADDRESS_LINE2}
+                  <span className="hero-card-place">
+                    {ADDRESS_LINE1}
+                    <br />
+                    {ADDRESS_LINE2}
+                  </span>
                   <a className="hero-card-link" href={MAPS_DIRECTIONS_URL} target="_blank" rel="noreferrer">
                     Get directions
                   </a>

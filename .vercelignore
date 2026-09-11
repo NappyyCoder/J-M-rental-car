@@ -11,3 +11,7 @@ dist/
 docs/
 scripts/
 supabase/
+.align*
+*.HEIC
+.env*
+!.env.example
