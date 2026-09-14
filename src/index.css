@@ -8,10 +8,14 @@
   --navy-mid: var(--ink-mid);
   --navy-light: var(--ink-light);
   /* Gold kept only for the literal Gold package badge/label */
-  --gold: #a9741d;
-  --gold-dark: #855912;
-  --gold-soft: #faf4e8;
-  --gold-light: #d8b877;
+  --gold: #d4af37;
+  --gold-dark: #b08d2a;
+  --gold-soft: #f7f0d4;
+  --gold-light: #f3e08a;
+  --silver: #c8ccd1;
+  --silver-dark: #8d9399;
+  --silver-soft: #f4f5f6;
+  --silver-light: #eef0f2;
   /* UI accent. Simplified to the ink ramp so the site reads clean and monochrome */
   --blue: var(--ink);
   --blue-dark: var(--ink-mid);
@@ -978,8 +982,8 @@ main {
 
 .home-package-visual {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: block;
+  aspect-ratio: 16 / 9;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--line);
@@ -995,19 +999,26 @@ main {
 
 .home-package-photo {
   width: 100%;
-  height: 220px;
-  object-fit: contain;
-  object-position: center;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 62%;
   display: block;
-  background: #eceae4;
+  background: var(--slate-100);
 }
 
 .home-package-overlay {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.7rem 0.9rem 0.8rem;
-  background: var(--ink);
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(180deg, transparent 25%, rgba(20, 19, 17, 0.9) 100%);
+}
+
+.home-package-overlay .package-badge {
+  align-self: flex-start;
 }
 
 .home-package-overlay p {
@@ -1133,11 +1144,11 @@ main {
 }
 
 .home-package-link--gold:hover {
-  border-color: #fcd34d;
+  border-color: var(--gold);
 }
 
 .home-package-link--silver:hover {
-  border-color: #94a3b8;
+  border-color: var(--silver-dark);
 }
 
 .home-package-link p {
@@ -1301,12 +1312,12 @@ main {
 }
 
 .quick-cta-package--gold:hover {
-  border-color: #d97706;
-  color: #b45309;
+  border-color: var(--gold-dark);
+  color: #7a6418;
 }
 
 .quick-cta-package--silver:hover {
-  border-color: #64748b;
+  border-color: var(--silver-dark);
   color: var(--slate-700);
 }
 
@@ -1754,9 +1765,12 @@ main {
 .hero-card-link {
   display: block;
   width: fit-content;
-  margin-top: 0.55rem;
+  margin-top: 0.7rem;
   font-size: 0.82rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
+  word-spacing: 0.12em;
+  white-space: nowrap;
   color: var(--white);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -2247,13 +2261,13 @@ main {
 }
 
 .package-card--gold {
-  border-color: #d4a017;
-  background: linear-gradient(180deg, #fffbeb 0%, var(--white) 100%);
+  border-color: var(--gold);
+  background: linear-gradient(180deg, var(--gold-soft) 0%, var(--white) 100%);
 }
 
 .package-card--silver {
-  border-color: #94a3b8;
-  background: linear-gradient(180deg, #f8fafc 0%, var(--white) 100%);
+  border-color: var(--silver);
+  background: linear-gradient(180deg, var(--silver-soft) 0%, var(--white) 100%);
 }
 
 .package-card h3 {
@@ -2279,13 +2293,15 @@ main {
 }
 
 .package-badge--gold {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #fff;
+  background: linear-gradient(180deg, #f6e7a3 0%, #d4af37 48%, #b08d2a 100%);
+  color: #2a2108;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .package-badge--silver {
-  background: linear-gradient(135deg, #94a3b8, #64748b);
-  color: #fff;
+  background: linear-gradient(180deg, #f4f5f6 0%, #c8ccd1 48%, #8d9399 100%);
+  color: #2a2d31;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .package-tabs {
@@ -2326,13 +2342,15 @@ main {
 }
 
 .package-tab--gold.active {
-  border-color: #d97706;
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border-color: var(--gold-dark);
+  background: linear-gradient(180deg, #f6e7a3, #d4af37);
+  color: #2a2108;
 }
 
 .package-tab--silver.active {
-  border-color: #64748b;
-  background: linear-gradient(135deg, #94a3b8, #64748b);
+  border-color: var(--silver-dark);
+  background: linear-gradient(180deg, #f4f5f6, #c8ccd1);
+  color: #2a2d31;
 }
 
 .package-filter-note {
@@ -2346,11 +2364,11 @@ main {
 }
 
 .vehicle--gold {
-  border-color: #fcd34d;
+  border-color: var(--gold);
 }
 
 .vehicle--silver {
-  border-color: var(--line);
+  border-color: var(--silver);
 }
 
 .admin-fleet-title .package-badge {
@@ -5000,7 +5018,6 @@ a.footer-address:hover {
     height: 230px;
   }
 
-  .home-package-photo,
   .about-media img {
     height: 200px;
   }

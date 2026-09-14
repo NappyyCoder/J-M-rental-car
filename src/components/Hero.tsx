@@ -178,7 +178,7 @@ export function Hero() {
                     {ADDRESS_LINE2}
                   </span>
                   <a className="hero-card-link" href={MAPS_DIRECTIONS_URL} target="_blank" rel="noreferrer">
-                    Get directions
+                    Get{'\u00a0'}directions
                   </a>
                 </span>
               </li>
