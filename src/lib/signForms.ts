@@ -36,7 +36,7 @@ export const SIGN_FORMS: SignFormTemplate[] = [
     title: 'J&M Rental Agreement',
     version: '2026.09',
     description:
-      'Renter, vehicle, coverage, and signature. Used at the desk. Open this page by typing the URL.',
+      'Fill the same paper rental agreement, then sign on page 1 and page 2. Used at the desk. Open this page by typing the URL.',
     retentionYears: 3,
     body: [
       'Absolutely no drivers under 21 years of age.',
@@ -179,15 +179,25 @@ export type SignSubmission = {
 }
 
 const STORAGE_KEY = 'jm-sign-submissions'
+const pdfById = new Map<string, string>()
+
+function withCachedPdf(submission: SignSubmission): SignSubmission {
+  return {
+    ...submission,
+    pdfDataUrl: pdfById.get(submission.id) || submission.pdfDataUrl,
+  }
+}
 
 export function listSignSubmissions(): SignSubmission[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return []
     const parsed = JSON.parse(raw) as SignSubmission[]
-    return parsed.sort(
-      (a, b) => new Date(b.signedAt).getTime() - new Date(a.signedAt).getTime(),
-    )
+    return parsed
+      .map(withCachedPdf)
+      .sort(
+        (a, b) => new Date(b.signedAt).getTime() - new Date(a.signedAt).getTime(),
+      )
   } catch {
     return []
   }
@@ -198,7 +208,10 @@ export function getSignSubmission(id: string): SignSubmission | null {
 }
 
 export function saveSignSubmission(submission: SignSubmission) {
-  const all = listSignSubmissions().filter((s) => s.id !== submission.id)
-  all.unshift(submission)
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(all))
+  pdfById.set(submission.id, submission.pdfDataUrl)
+  const all = listSignSubmissions()
+    .filter((s) => s.id !== submission.id)
+    .map((s) => ({ ...s, pdfDataUrl: '' }))
+  all.unshift({ ...submission, pdfDataUrl: '' })
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all.slice(0, 20)))
 }

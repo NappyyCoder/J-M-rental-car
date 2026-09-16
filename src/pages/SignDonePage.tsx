@@ -32,18 +32,20 @@ export function SignDonePage() {
               .
             </p>
             <div className="sign-actions">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() =>
-                  downloadPdf(
-                    submission.pdfDataUrl,
-                    `jm-${submission.formSlug}-${submission.id.slice(0, 8)}.pdf`,
-                  )
-                }
-              >
-                Download PDF
-              </button>
+              {submission.pdfDataUrl ? (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() =>
+                    downloadPdf(
+                      submission.pdfDataUrl,
+                      `jm-${submission.formSlug}-${submission.id.slice(0, 8)}.pdf`,
+                    )
+                  }
+                >
+                  Download PDF
+                </button>
+              ) : null}
               <Link to="/sign" className="btn btn-outline">
                 Done
               </Link>

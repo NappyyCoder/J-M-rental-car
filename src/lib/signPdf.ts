@@ -131,17 +131,28 @@ export async function buildSignedPdf(options: {
   return doc.save()
 }
 
-export function pdfBytesToDataUrl(bytes: Uint8Array): string {
-  let binary = ''
-  for (let i = 0; i < bytes.length; i += 1) {
-    binary += String.fromCharCode(bytes[i]!)
-  }
-  return `data:application/pdf;base64,${btoa(binary)}`
+function bytesToBlob(bytes: Uint8Array): Blob {
+  const copy = new Uint8Array(bytes.byteLength)
+  copy.set(bytes)
+  return new Blob([copy], { type: 'application/pdf' })
 }
 
-export function downloadPdf(dataUrl: string, fileName: string) {
+export function pdfBytesToDataUrl(bytes: Uint8Array): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(String(reader.result))
+    reader.onerror = () =>
+      reject(reader.error ?? new Error('Could not encode the PDF.'))
+    reader.readAsDataURL(bytesToBlob(bytes))
+  })
+}
+
+export function downloadPdf(source: string | Uint8Array, fileName: string) {
+  const href =
+    typeof source === 'string' ? source : URL.createObjectURL(bytesToBlob(source))
   const a = document.createElement('a')
-  a.href = dataUrl
+  a.href = href
   a.download = fileName
   a.click()
+  if (typeof source !== 'string') URL.revokeObjectURL(href)
 }

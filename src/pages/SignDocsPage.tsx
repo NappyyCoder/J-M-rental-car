@@ -107,6 +107,7 @@ export function SignDocsPage() {
                         <button
                           type="button"
                           className="text-link"
+                          disabled={!s.pdfDataUrl}
                           onClick={() =>
                             downloadPdf(
                               s.pdfDataUrl,

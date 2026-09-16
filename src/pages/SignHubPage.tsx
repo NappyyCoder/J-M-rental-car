@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
+import { getForm } from '../agreement/forms'
 import { DeskQr } from '../components/DeskQr'
 import { PageLayout } from '../components/PageLayout'
 import { SITE_NAME_SHORT } from '../lib/contact'
-import { SIGN_FORMS } from '../lib/signForms'
 
-/** Hidden desk page. Not in the main menu. Type /sign in the address bar. */
+/** Hidden desk page. Not in the menu. Type /sign in the address bar. */
 export function SignHubPage() {
-  const form = SIGN_FORMS[0]
+  const form = getForm('rental-agreement')
+  if (!form) return null
 
   return (
     <PageLayout noIndex>
@@ -25,8 +26,8 @@ export function SignHubPage() {
               <h2>{form.title}</h2>
               <p>{form.description}</p>
               <ul>
-                <li>Open by typing the URL</li>
-                <li>Phone signature via QR</li>
+                <li>Fill the same pages as the paper agreement</li>
+                <li>Sign on page 1 and page 2</li>
                 <li>PDF stored for 3 years</li>
               </ul>
               <div className="sign-actions">
