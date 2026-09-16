@@ -1,29 +1,66 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { PageLayout } from '../components/PageLayout'
+import { StaffGate } from '../components/StaffGate'
 import { SITE_NAME_SHORT } from '../lib/contact'
-import { listSignSubmissions } from '../lib/signForms'
+import { listSignedDocuments } from '../lib/signCloud'
+import { listSignSubmissions, type SignSubmission } from '../lib/signForms'
 import { downloadPdf } from '../lib/signPdf'
+import { isSupabaseConfigured } from '../lib/supabase'
 
-/** Hidden staff list, not in main navigation. Open /sign/docs manually. */
+/** Hidden staff list. Type /sign/docs. Requires the same login as /admin. */
 export function SignDocsPage() {
   const [tick, setTick] = useState(0)
-  const submissions = useMemo(() => {
-    void tick
-    return listSignSubmissions()
+  const [cloud, setCloud] = useState<SignSubmission[] | null>(null)
+  const [cloudError, setCloudError] = useState('')
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) {
+      setCloud([])
+      return
+    }
+    let cancelled = false
+    listSignedDocuments()
+      .then((rows) => {
+        if (!cancelled) {
+          setCloud(rows)
+          setCloudError('')
+        }
+      })
+      .catch((err: unknown) => {
+        if (!cancelled) {
+          setCloudError(err instanceof Error ? err.message : 'Could not load signed documents.')
+          setCloud([])
+        }
+      })
+    return () => {
+      cancelled = true
+    }
   }, [tick])
 
+  const local = listSignSubmissions()
+  const submissions = cloud && cloud.length > 0 ? cloud : local
+  const usingLocalOnly = !cloud || (cloud.length === 0 && local.length > 0)
+
   return (
-    <PageLayout>
+    <StaffGate
+      title="Signed documents"
+      lead="Use the same staff email and password as fleet admin."
+    >
       <div className="sign-page">
         <div className="container sign-shell sign-shell-wide">
           <p className="label">{SITE_NAME_SHORT} staff</p>
           <h1>Signed documents</h1>
           <p className="sign-lead">
-            Demo storage is on this browser for now. Cloud storage (3-year
-            retention) comes next. Refresh if you just signed on this same
-            device.
+            Copies are kept for 3 years. Type <strong>/sign/docs</strong> to
+            open this page. It is not in the public menu.
           </p>
+          {cloudError ? <p className="sign-error">{cloudError}</p> : null}
+          {usingLocalOnly && !cloudError ? (
+            <p className="sign-hint">
+              Showing documents saved on this browser. Run the signed-documents
+              SQL in Supabase if office copies should appear on every computer.
+            </p>
+          ) : null}
           <div className="sign-actions" style={{ marginBottom: '1.25rem' }}>
             <button type="button" className="btn btn-outline" onClick={() => setTick((n) => n + 1)}>
               Refresh list
@@ -31,12 +68,15 @@ export function SignDocsPage() {
             <Link to="/sign" className="btn btn-outline">
               Sign hub
             </Link>
+            <Link to="/admin" className="btn btn-outline">
+              Fleet admin
+            </Link>
           </div>
 
           {submissions.length === 0 ? (
             <div className="sign-card sign-empty">
-              No signatures on this device yet.{' '}
-              <Link to="/sign/waiver">Sign the sample form</Link>
+              No signatures yet.{' '}
+              <Link to="/sign/rental-agreement">Open the rental agreement</Link>
             </div>
           ) : (
             <div className="sign-table-wrap">
@@ -54,7 +94,7 @@ export function SignDocsPage() {
                   {submissions.map((s) => (
                     <tr key={s.id}>
                       <td>
-                        <strong>{s.fields.fullName || '-'}</strong>
+                        <strong>{s.fields.renterName || s.fields.fullName || '-'}</strong>
                         <div className="muted">{s.fields.email}</div>
                       </td>
                       <td>
@@ -85,6 +125,6 @@ export function SignDocsPage() {
           )}
         </div>
       </div>
-    </PageLayout>
+    </StaffGate>
   )
 }

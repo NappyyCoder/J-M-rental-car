@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /sign
+Disallow: /sign/
+Disallow: /admin
+Disallow: /admin/

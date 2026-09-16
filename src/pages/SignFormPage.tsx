@@ -3,20 +3,84 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { PageLayout } from '../components/PageLayout'
 import { SignaturePad } from '../components/SignaturePad'
 import { SITE_NAME_SHORT } from '../lib/contact'
+import { saveSignedDocument } from '../lib/signCloud'
 import {
+  allSignFields,
   getSignForm,
   saveSignSubmission,
+  type SignField,
   type SignSubmission,
 } from '../lib/signForms'
+import { isSupabaseConfigured } from '../lib/supabase'
 import { buildSignedPdf, downloadPdf, pdfBytesToDataUrl } from '../lib/signPdf'
+
+function FieldControl({
+  field,
+  value,
+  onChange,
+}: {
+  field: SignField
+  value: string
+  onChange: (value: string) => void
+}) {
+  if (field.type === 'choice') {
+    return (
+      <div className="sign-choice">
+        {(field.options ?? []).map((option) => (
+          <label key={option.value} className="sign-choice-option">
+            <input
+              type="radio"
+              name={field.name}
+              value={option.value}
+              checked={value === option.value}
+              required={field.required}
+              onChange={(e) => onChange(e.target.value)}
+            />
+            <span>{option.label}</span>
+          </label>
+        ))}
+      </div>
+    )
+  }
+
+  if (field.type === 'select') {
+    return (
+      <select
+        name={field.name}
+        required={field.required}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        <option value="">Select</option>
+        {(field.options ?? []).map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    )
+  }
+
+  return (
+    <input
+      type={field.type}
+      name={field.name}
+      required={field.required}
+      placeholder={field.placeholder}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  )
+}
 
 export function SignFormPage() {
   const { slug = '' } = useParams()
   const form = useMemo(() => getSignForm(slug), [slug])
   const navigate = useNavigate()
+  const fields = useMemo(() => (form ? allSignFields(form) : []), [form])
 
   const [values, setValues] = useState<Record<string, string>>(() =>
-    Object.fromEntries((form?.fields ?? []).map((f) => [f.name, ''])),
+    Object.fromEntries(fields.map((f) => [f.name, ''])),
   )
   const [signature, setSignature] = useState<string | null>(null)
   const [agreed, setAgreed] = useState(false)
@@ -27,6 +91,7 @@ export function SignFormPage() {
     setSignature(dataUrl)
   }, [])
 
+  if (slug === 'waiver') return <Navigate to="/sign/rental-agreement" replace />
   if (!form) return <Navigate to="/sign" replace />
 
   async function handleSubmit(e: FormEvent) {
@@ -34,7 +99,7 @@ export function SignFormPage() {
     if (!form) return
     setError(null)
 
-    for (const field of form.fields) {
+    for (const field of fields) {
       if (field.required && !values[field.name]?.trim()) {
         setError(`Please fill in ${field.label}.`)
         return
@@ -77,26 +142,29 @@ export function SignFormPage() {
         pdfDataUrl,
       }
 
+      if (isSupabaseConfigured()) {
+        await saveSignedDocument(submission)
+      }
       saveSignSubmission(submission)
       downloadPdf(pdfDataUrl, `jm-${form.slug}-${id.slice(0, 8)}.pdf`)
       navigate(`/sign/done/${id}`)
     } catch {
-      setError('Could not save the signed PDF. Please try again.')
+      setError('Could not save the signed PDF. Check the connection and try again.')
       setSubmitting(false)
     }
   }
 
   return (
-    <PageLayout>
+    <PageLayout noIndex>
       <div className="sign-page">
         <div className="container sign-shell">
           <p className="label">
-            {SITE_NAME_SHORT} · Demo · v{form.version}
+            {SITE_NAME_SHORT} · v{form.version}
           </p>
           <h1>{form.title}</h1>
           <p className="sign-lead">
-            Stored for {form.retentionYears} years after signing. Replace this
-            content when the real rental documents arrive.
+            Stored for {form.retentionYears} years after signing. Pickup at our
+            Virginia Beach office.
           </p>
 
           <form className="sign-form" onSubmit={handleSubmit}>
@@ -104,43 +172,45 @@ export function SignFormPage() {
               <h2>Agreement</h2>
               <div className="sign-body">
                 {form.body.map((paragraph) => (
-                  <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
                 ))}
               </div>
             </section>
 
-            <section className="sign-card">
-              <h2>Your information</h2>
-              <div className="sign-fields">
-                {form.fields.map((field) => (
-                  <label key={field.name} className="field">
-                    <span>
-                      {field.label}
-                      {field.required ? ' *' : ''}
-                    </span>
-                    <input
-                      type={field.type}
-                      name={field.name}
-                      required={field.required}
-                      placeholder={field.placeholder}
-                      value={values[field.name] ?? ''}
-                      onChange={(e) =>
-                        setValues((prev) => ({
-                          ...prev,
-                          [field.name]: e.target.value,
-                        }))
-                      }
-                    />
-                  </label>
-                ))}
-              </div>
-            </section>
+            {form.sections.map((section) => (
+              <section key={section.title} className="sign-card">
+                <h2>{section.title}</h2>
+                {section.description ? <p className="sign-hint">{section.description}</p> : null}
+                <div className="sign-fields">
+                  {section.fields.map((field) => (
+                    <label
+                      key={field.name}
+                      className={`field${field.wide || field.type === 'choice' ? ' field-wide' : ''}`}
+                    >
+                      <span>
+                        {field.label}
+                        {field.required ? ' *' : ''}
+                      </span>
+                      <FieldControl
+                        field={field}
+                        value={values[field.name] ?? ''}
+                        onChange={(next) =>
+                          setValues((prev) => ({
+                            ...prev,
+                            [field.name]: next,
+                          }))
+                        }
+                      />
+                      {field.helpText ? <small className="sign-help">{field.helpText}</small> : null}
+                    </label>
+                  ))}
+                </div>
+              </section>
+            ))}
 
             <section className="sign-card">
               <h2>Sign here</h2>
-              <p className="sign-hint">
-                Draw your signature with a finger or mouse.
-              </p>
+              <p className="sign-hint">Draw your signature with a finger or mouse.</p>
               <SignaturePad onChange={onSignatureChange} />
               <label className="sign-agree">
                 <input
@@ -149,8 +219,8 @@ export function SignFormPage() {
                   onChange={(e) => setAgreed(e.target.checked)}
                 />
                 <span>
-                  I agree to sign this document electronically for J&amp;M Car
-                  Rental. I understand a PDF copy will be stored for{' '}
+                  I agree to sign this rental agreement electronically for J&amp;M
+                  Car Rental. I understand a PDF copy will be stored for{' '}
                   {form.retentionYears} years.
                 </span>
               </label>

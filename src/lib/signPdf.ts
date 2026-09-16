@@ -32,18 +32,27 @@ export async function buildSignedPdf(options: {
     options
 
   const doc = await PDFDocument.create()
-  const page = doc.addPage([612, 792])
   const font = await doc.embedFont(StandardFonts.Helvetica)
   const bold = await doc.embedFont(StandardFonts.HelveticaBold)
-
-  let y = 750
   const left = 48
+  const top = 750
+  const bottom = 56
+
+  let page = doc.addPage([612, 792])
+  let y = top
+
+  const ensureSpace = (needed: number) => {
+    if (y - needed >= bottom) return
+    page = doc.addPage([612, 792])
+    y = top
+  }
 
   const draw = (
     text: string,
     size = 11,
     opts?: { bold?: boolean; color?: ReturnType<typeof rgb> },
   ) => {
+    ensureSpace(size + 8)
     page.drawText(text, {
       x: left,
       y,
@@ -55,12 +64,8 @@ export async function buildSignedPdf(options: {
   }
 
   draw(SITE_NAME_SHORT.toUpperCase(), 11, { bold: true })
-  draw('DEMO. NOT A LEGAL DOCUMENT', 10, {
-    bold: true,
-    color: rgb(0.66, 0.45, 0.11),
-  })
   draw(form.title, 18, { bold: true })
-  draw(`${SITE_NAME} · Version ${form.version}`, 10, {
+  draw(`${SITE_NAME} · ${form.version}`, 10, {
     color: rgb(0.35, 0.35, 0.32),
   })
   y -= 8
@@ -72,10 +77,15 @@ export async function buildSignedPdf(options: {
     y -= 6
   }
 
-  y -= 8
-  draw('Signer details', 13, { bold: true })
-  for (const field of form.fields) {
-    draw(`${field.label}: ${fields[field.name] || '-'}`, 11)
+  for (const section of form.sections) {
+    y -= 6
+    draw(section.title, 13, { bold: true })
+    for (const field of section.fields) {
+      const value = fields[field.name]?.trim() || '-'
+      for (const line of wrapText(`${field.label}: ${value}`, 85)) {
+        draw(line, 11)
+      }
+    }
   }
 
   y -= 10
@@ -91,6 +101,7 @@ export async function buildSignedPdf(options: {
   const sigHeight = Math.min(sigDims.height, 80)
   const sigWidth = (sigDims.width / sigDims.height) * sigHeight
 
+  ensureSpace(sigHeight + 28)
   page.drawRectangle({
     x: left,
     y: y - sigHeight - 8,
@@ -99,15 +110,14 @@ export async function buildSignedPdf(options: {
     borderColor: rgb(0.75, 0.75, 0.72),
     borderWidth: 1,
   })
-
   page.drawImage(signatureImage, {
     x: left + 8,
     y: y - sigHeight,
     width: sigWidth,
     height: sigHeight,
   })
-
   y -= sigHeight + 36
+
   draw('Audit / retention', 13, { bold: true })
   draw(`Submission ID: ${submissionId}`, 10)
   draw(`Signed at (UTC): ${signedAt}`, 10)

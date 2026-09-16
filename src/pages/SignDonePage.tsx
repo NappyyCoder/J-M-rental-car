@@ -10,17 +10,18 @@ export function SignDonePage() {
 
   if (!submission) return <Navigate to="/sign" replace />
 
+  const name = submission.fields.renterName || submission.fields.fullName || 'Signer'
+
   return (
-    <PageLayout>
+    <PageLayout noIndex>
       <div className="sign-page">
         <div className="container sign-shell">
           <div className="sign-card">
             <p className="label">Signature saved</p>
             <h1>Thank you</h1>
             <p className="sign-lead">
-              {submission.fields.fullName || 'Signer'}, your signed copy of{' '}
-              <strong>{submission.formTitle}</strong> is stored with{' '}
-              {SITE_NAME_SHORT} until{' '}
+              {name}, your signed copy of <strong>{submission.formTitle}</strong>{' '}
+              is stored with {SITE_NAME_SHORT} until{' '}
               <strong>
                 {new Date(submission.retainUntil).toLocaleDateString(undefined, {
                   year: 'numeric',
@@ -43,8 +44,8 @@ export function SignDonePage() {
               >
                 Download PDF
               </button>
-              <Link to="/sign/docs" className="btn btn-outline">
-                Staff dashboard
+              <Link to="/sign" className="btn btn-outline">
+                Done
               </Link>
             </div>
           </div>

@@ -53,7 +53,7 @@ export function AdminPage() {
 
   if (!configured) {
     return (
-      <PageLayout>
+      <PageLayout noIndex>
         <div className="admin-page">
           <div className="container admin-shell">
             <div className="admin-gate">
@@ -82,7 +82,7 @@ export function AdminPage() {
 
   if (checking) {
     return (
-      <PageLayout>
+      <PageLayout noIndex>
         <div className="admin-page">
           <div className="container admin-shell">
             <p className="admin-loading">Checking login…</p>
@@ -94,7 +94,7 @@ export function AdminPage() {
 
   if (!authed) {
     return (
-      <PageLayout>
+      <PageLayout noIndex>
         <div className="admin-page">
           <div className="container admin-shell">
             <div className="admin-gate">
@@ -413,6 +413,9 @@ function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
           </p>
         </div>
         <div className="admin-topbar-actions">
+          <Link to="/sign/docs" className="btn btn-outline btn-sm">
+            Signed docs
+          </Link>
           <div className="field">
             <label htmlFor="admin-date">Filter by date</label>
             <input

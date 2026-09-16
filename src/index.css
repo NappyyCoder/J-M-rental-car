@@ -5238,7 +5238,7 @@ a.footer-address:hover {
   }
 }
 
-/* Hidden e-sign demo (/sign), not linked in main nav */
+/* Hidden e-sign desk page (/sign), not linked in main nav */
 .sign-page {
   padding: calc(var(--nav-h) + 1.75rem) 0 3rem;
   min-height: calc(100vh - var(--nav-h));
@@ -5328,6 +5328,10 @@ a.footer-address:hover {
   }
 }
 
+.sign-fields .field-wide {
+  grid-column: 1 / -1;
+}
+
 .sign-fields .field span {
   font-size: 0.72rem;
   font-weight: 700;
@@ -5336,7 +5340,18 @@ a.footer-address:hover {
   color: var(--slate-500);
 }
 
-.sign-fields .field input {
+.sign-help {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-muted);
+}
+
+.sign-fields .field input,
+.sign-fields .field select {
   width: 100%;
   padding: 0.65rem 0.75rem;
   border: 1px solid var(--line);
@@ -5345,11 +5360,38 @@ a.footer-address:hover {
   font-size: 1rem;
 }
 
-.sign-fields .field input:focus {
+.sign-fields .field input:focus,
+.sign-fields .field select:focus {
   outline: none;
   background: var(--white);
   border-color: var(--ink-light);
   box-shadow: 0 0 0 3px rgba(26, 25, 23, 0.08);
+}
+
+.sign-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.sign-choice-option {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--slate-50);
+  font-size: 0.9rem;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sign-choice-option:has(input:checked) {
+  background: var(--white);
+  border-color: var(--ink);
 }
 
 .sign-pad {
